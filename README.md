@@ -16,7 +16,7 @@ Python Modules
 
 
 
-Instalation
+Installation
 =
     git clone https://github.com/Lulz3xploit/LittleBrother
     cd LittleBrother
@@ -36,3 +36,10 @@ Features
 - Bssid locator
 - Dox maker
 - Exif read
+
+
+Compatible
+=
+- Windows
+- MacOS
+- Linux
