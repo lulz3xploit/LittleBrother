@@ -37,10 +37,10 @@ def mkdir(dossier):
 			print("[!] Une erreur est survenu lors du creation du dossier.")
 
 def slowprint(s):
-  for c in s + '\n':
-    sys.stdout.write(c)
-    sys.stdout.flush()
-    time.sleep(1./10)
+	for c in s + '\n':
+		sys.stdout.write(c)
+		sys.stdout.flush()
+		time.sleep(1./10)
 
 def clear():
 	if os.name == 'nt':
@@ -49,18 +49,18 @@ def clear():
 		return os.system('clear')
 
 def pause():
-    raw_input("\n Appuyez sur [ENTER] pour retourner au Menu.")
+	raw_input("\n Appuyez sur [ENTER] pour retourner au Menu.")
     #
 
 def printResult(name, adresse, num):
-    print("\n"+"=" * 30 +"\n\n[Nom, Prenom]\n %s" % (name))
-    adresse = adresse.split(",")
-    print("\n[Adresse]\n %s %s " % (adresse[0], adresse[1]))
-    print(" \n[Phone]\n %s" % (num))
-    if (num != ''):
-        phoneNumber(num)
-    else:
-        pass
+	print("\n"+"=" * 30 +"\n\n[Nom, Prenom]\n %s" % (name))
+	adresse = adresse.split(",")
+	print("\n[Adresse]\n %s %s " % (adresse[0], adresse[1]))
+	print(" \n[Phone]\n %s" % (num))
+	if (num != ''):
+		phoneNumber(num)
+	else:
+		pass
 
 def bssidFinder():
 	bssid = raw_input("[#][LittleBrother][Lookup][MAC/Bssid:~$ ")
@@ -74,7 +74,7 @@ def bssidFinder():
 		print("[%s]\n" % (bssid))
 		print("Localisation Not Found")
 	else:
-	    pass
+		pass
 
 	localisation = str(values['data']['lat']) + ','+str(values['data']['lon'])
 	print("[ %s ]" % (bssid))
@@ -92,7 +92,7 @@ def ipFinder():
 	status = values['status']
 
 	if status != "success":
-	    print("[!] IP not valid o.o'")
+		print("[!] IP not valid o.o'")
 
 	else:
 		print("[ %s ]" % (ip))
@@ -254,10 +254,10 @@ def searchGoogle(requete=''):
 	content = requete.text
 	urls = re.findall('url\\?q=(.*?)&', content)
 	for url in urls:
-	    if not "googleusercontent" in url:
-	        if not "/settings/ads" in url:
+		if not "googleusercontent" in url:
+			if not "/settings/ads" in url:
 	        	# if "insta" in url or "twitter" in url or "facebook" in url:
-	        		print("[+] Possible connection: "+url)
+				print("[+] Possible connection: "+url)
 
 def Operator(num):
 	url = 'https://www.infos-numero.com/numero/'
@@ -282,15 +282,15 @@ def Operator(num):
 		pass
 
 def phoneNumber(num):
-    def mob_fix(pfx):
-    	if pfx == '06' or pfx == '07':
-    		return("Portable")
-    	elif pfx == '08' or pfx == '09':
-    		return("internet")
-    	else:
-    		return("Fixe")
+	def mob_fix(pfx):
+		if pfx == '06' or pfx == '07':
+			return("Portable")
+		elif pfx == '08' or pfx == '09':
+			return("internet")
+		else:
+			return("Fixe")
 
-    def loc(num):
+	def loc(num):
 		location = {
     	"01": "Ile de France.",
     	"02": "Nord-Ouest de la France.",
@@ -312,15 +312,15 @@ def phoneNumber(num):
 		ville = p[2]
 		print(" + "+ville.strip())
 
-    num = num.replace(" ","")
-    pfx = num[0:2]
+	num = num.replace(" ","")
+	pfx = num[0:2]
     # mob_fix(pfx)
 
-    if mob_fix(pfx) == 'Portable':
-    	print(" + Portable")
-    elif mob_fix(pfx) == 'internet':
-    	print(" + VOIP")
-    else:
+	if mob_fix(pfx) == 'Portable':
+		print(" + Portable")
+	elif mob_fix(pfx) == 'internet':
+		print(" + VOIP")
+	else:
 		print(" + Fixe")
 		try:
 			loc(num)
@@ -329,7 +329,7 @@ def phoneNumber(num):
 			Operator(num2)
 		except:
 			pass
-    Operator(num)
+	Operator(num)
 
 def searchPersonne():
 	nom = raw_input("\n[#][LittleBrother][Lookup][Nom Prenom:~$ ")
@@ -397,23 +397,23 @@ def exifRead():
 
 def mailToIP():
 	def isp_host(ip):
-	    url = "http://ip-api.com/json/" + ip
-	    response = requests.get(url)
-	    data = response.text
-	    values = json.loads(data)
-	    return values['isp']
+		url = "http://ip-api.com/json/" + ip
+		response = requests.get(url)
+		data = response.text
+		values = json.loads(data)
+		return values['isp']
 
 	def ip_loc(ip):
-	    url = "https://extreme-ip-lookup.com/json/" + ip
-	    response = requests.get(url)
-	    data = response.text
-	    values = json.loads(data)
+		url = "https://extreme-ip-lookup.com/json/" + ip
+		response = requests.get(url)
+		data = response.text
+		values = json.loads(data)
 
-	    return(values['country']+', '+values['region']+', '+ values['city'])
+		return(values['country']+', '+values['region']+', '+ values['city'])
 
 	def get_domain(ip):
-	    s = socket.gethostbyaddr(ip)
-	    return(s[0])
+		s = socket.gethostbyaddr(ip)
+		return(s[0])
 
 	files = raw_input("\n[#][LittleBrother][Lookup][Entete:~$ ")
 	if not os.path.exists(files):
@@ -477,26 +477,26 @@ def doxMaker():
 	f.write("\nAdresse IP: "+ip)
 	s = raw_input(" Voulez vous ajoutez des resaux sociaux a la liste ? [y/N]: ").upper()
 	if s == 'Y':
-	    while True:
-	        reseaux = raw_input(" Réseaux sociaux (ex: Facebook...): ")
-	        name = raw_input("Nom, pseudo, lien : ")
-	        f.write("\n"+reseaux.capitalize()+': '+name)
-	        c = raw_input(" Rajouter un compte ? : [y/N]: ").upper()
-	        if c == 'Y':
-	            pass
-	        else:
-	            break
+		while True:
+			reseaux = raw_input(" Réseaux sociaux (ex: Facebook...): ")
+			name = raw_input("Nom, pseudo, lien : ")
+			f.write("\n"+reseaux.capitalize()+': '+name)
+			c = raw_input(" Rajouter un compte ? : [y/N]: ").upper()
+			if c == 'Y':
+				pass
+			else:
+				break
 	else:
-	    pass
+		pass
 	s = raw_input("Ajouter d'autre information ? [y/N]: ").upper()
 	if s == 'Y':
-	    print(" ATTENTION! appuyez sur ENTRER une fois fini !\n")
-	    print(" Utilser des ';' pour espacer les infos")
-	    print("ex: couleur: bleu; bssid: FF:FF:FF:FF:FF; chat: miaou")
-	    infos = raw_input("> ").replace("; ","\n")
-	    f.write('\n'+infos)
+		print(" ATTENTION! appuyez sur ENTRER une fois fini !\n")
+		print(" Utilser des ';' pour espacer les infos")
+		print("ex: couleur: bleu; bssid: FF:FF:FF:FF:FF; chat: miaou")
+		infos = raw_input("> ").replace("; ","\n")
+		f.write('\n'+infos)
 	else:
-	    pass
+		pass
 	print("\n[+] Fichier enregistre dans : 'Watched/"+nameFichier+"'")
 
 def showDataBase():
