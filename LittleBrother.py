@@ -384,16 +384,16 @@ def exifRead():
 		metaData = {}
 
 		imgFile = Image.open(photo)
-		print "Getting meta data..."
+		print("[*] Getting meta data...")
 		info = imgFile._getexif()
 		if info:
-			print "found meta data!"
+			print("[+] Found meta data!")
 			for (tag, value) in info.items():
 				tagname = TAGS.get(tag, tag)
 				metaData[tagname] = value
-				print tagname, value
+				print(tagname, value)
 	except:
-		print("Failed")
+		print("[!] Failed.")
 
 def mailToIP():
 	def isp_host(ip):
