@@ -13,6 +13,7 @@ Python Modules
 - bs4 
 - socket 
 - json
+- PIL
 
 
 
