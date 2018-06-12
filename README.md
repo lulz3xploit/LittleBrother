@@ -30,8 +30,8 @@ Installation
 
 Features 
 =
- - LOOKUP:
- =
+ - Lookup:
+
 	- Phone lookup
 	- Email lookup
 	- Last name / First name lookup
@@ -47,7 +47,7 @@ Features
 	- Facebook
 
  - Social engineering:
- =
+ 
 	- Spam mail
 	- Spoof phone
 
