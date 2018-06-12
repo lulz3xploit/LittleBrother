@@ -31,23 +31,25 @@ Installation
 Features 
 =
  - LOOKUP:
-- Phone lookup
-- Email lookup
-- Last name / First name lookup
-- Surname lookup
-- Addresse lookup
-- Mail ip locator
-- Ip locator
-- Bssid locator
-- Dox maker
-- Exif read 
-- Twitter
-- Instgram
-- Facebook
+ =
+	- Phone lookup
+	- Email lookup
+	- Last name / First name lookup
+	- Surname lookup
+	- Addresse lookup
+	- Mail ip locator
+	- Ip locator
+	- Bssid locator
+	- Dox maker
+	- Exif read 
+	- Twitter
+	- Instgram
+	- Facebook
 
  - Social engineering:
-- Spam mail
-- Spoof phone
+ =
+	- Spam mail
+	- Spoof phone
 
 
 Compatible
