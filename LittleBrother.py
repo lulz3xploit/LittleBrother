@@ -39,15 +39,17 @@ class instagramGetInfo:
 		follower = values['entry_data']['ProfilePage'][0]['graphql']['user']['edge_followed_by']['count']
 		friend = values['entry_data']['ProfilePage'][0]['graphql']['user']['edge_follow']['count']
 		media = values['entry_data']['ProfilePage'][0]['graphql']['user']['edge_owner_to_timeline_media']['count']
+		profilPicHd = values['entry_data']['ProfilePage'][0]['graphql']['user']['profile_pic_url_hd']
 		
 		self.id = profilId
-		self.bio = bio
+		self.profi_pic_hd = profilPicHd
+		self.biography = bio
 		self.username = user
 		self.name = name
 		self.private = private
-		self.follower = follower
-		self.friend = friend
-		self.media = media
+		self.followers = follower
+		self.friends = friend
+		self.medias = media
 
 class twitterSearchTool():
 
@@ -55,7 +57,7 @@ class twitterSearchTool():
 
 		nom = nom.replace(" ", "%20")
 
-		page = requests.get("https://twitter.com/search?f=users&vertical=default&q=%s" % (nom)).content.decode('utf-8')
+		page = requests.get("https://twitter.com/search?f=users&vertical=default&q=%s" % (nom)).text #.content.decode('utf-8')
 		datas = re.findall(r"data-screen-name=\"(.*) ", page)
 		# data = data.replace("\"", '').replace("data-screen-name=", '').replace("data-name=", '')
 		
@@ -77,14 +79,16 @@ class twitterSearchTool():
 		else:
 			url = "https://twitter.com/"+usernmae
 
-		page = requests.get(url).content.decode('utf-8')
+		req = requests.get(url)
+		page = req.content.decode('utf-8')
+		page0 = req.text
 
 		jsonData = re.findall(r"<input type=\"hidden\" id=\"init-data\" class=\"json-data\" value=\"(.*)\">", page)
 		data =  jsonData[0].replace("&quot;", "\"")
 
 		values = json.loads(data)
 
-		birthDate = re.findall(r"ProfileHeaderCard-birthdateText u-dir\" dir=\"ltr\"><span class=\"js-tooltip\" title=\"Publique\">(.*)", page)
+		birthDate = re.findall(r"ProfileHeaderCard-birthdateText u-dir\" dir=\"ltr\"><span class=\"js-tooltip\" title=\"Publique\">(.*)", page0)
 		profilId = values['profile_user']['id_str']
 		name = values['profile_user']['name']
 		username = values['profile_user']['screen_name']
@@ -353,17 +357,21 @@ def searchTwitter():
 	verif = twitool.verified
 	status = twitool.status
 	langue = twitool.langue
+	naissance = twitool.birth
 
 	print("[@%s]" % (username))
 	print("\n[+] Name: %s" % (name))
+	print("[+] Langue: %s" % (langue.upper()))
+	print("[+] Privee: %s" % (protected))
 	print("[+] ID: %s" % (profilId))
 	print("[+] Protected: %s" % (protected))
 	print("[+] Abonnees: %s | Abonnements: %s" % (followers, friend))
-	print("[BIO] %s" % (description))
+	print("[+] Tweets: %s" % (status))
 	print("[+] Ville: %s" % (location))
-	print("[+] Naissance: %s"  % (date))
+	print("[+] Naissance: %s"  % (naissance))
 	print("[+] Url: %s" % (url))
 	print("[+] Create: %s" % (dateCreate))
+	print("[BIO]: %s" % (description))
 
 def searchInstagram():
 	user = input("\n[#][LittleBrother][Lookup][Username:~$ ")
@@ -372,15 +380,17 @@ def searchInstagram():
 
 	name = insta.name
 	userId = insta.id
+	images = insta.profi_pic_hd
 	username = insta.username
 	private = insta.private
-	followers = insta.follower
-	friend = insta.friend
-	publication = insta.media
-	bio = insta.bio
+	followers = insta.followers
+	friend = insta.friends
+	publication = insta.medias
+	bio = insta.biography
 
 	print("\n[%s]" % (username))
 	print("\n[+] Name: %s" % (name))
+	print("[+] Pictures: %s" % (images))
 	print("[+] ID: %s" % (userId))
 	print("[+] Protected: %s" % (private))
 	print("[+] Abonnees: %s  |  Abonnements: %s" % (followers, friend))
@@ -597,12 +607,20 @@ def facebookStalk():
 	except:
 		pass
 
-	if facebookID:
+	while True:
+
+		if facebookID == "None":
+			print("[!] Impossible de recuperer l'ID.")
+			_id_  = input("\n[?] Connaissez-vous l'ID ? [O/N]: ")
+			if _id_.upper() == "O" or _id_.upper() == "Y":
+				facebookID = input("\n[#][LittleBrother][Lookup][ID:~$ ")
+				input(facebookID)
+			else:
+				break
 
 		print(resultProfile % (name, work, loc, ID))
-
 		print(menuStalk)
-
+		
 		while True:
 			s = input("\n[#][LittleBrother][Lookup][StalkFB:~$ ")
 			if s == "help":
@@ -626,8 +644,7 @@ def facebookStalk():
 					webbrowser.open(facebookUrl % (facebookID))
 				except ValueError:
 					pass
-	else:
-		print("[!] Impossible de recuperer l'ID.")
+		break
 
 def bssidFinder():
 	bssid = input("[#][LittleBrother][Lookup][MAC/Bssid:~$ ")
@@ -683,10 +700,9 @@ def SearchEmail4():
 	# clear()
 	# url = "https://www.google.com/search?num=100&q=\%s\\"
 	url = "https://www.google.fr/search?num=100&q=\\intext:\"%s\"\\"
-	print(url % (email))
-	requete = requests.get(url % (email)).content.decode('utf-8')
+	content = requests.get(url % (email)).text
 	urls = re.findall('url\\?q=(.*?)&', content)
-	cout = len(urls) - 1
+	cout = len(urls)
 	print("[*] Scan %s Link..." % (str(cout)))
 	x = 1
 	for url in urls:
@@ -695,7 +711,7 @@ def SearchEmail4():
 				if not "webcache.googleusercontent.com/" in url:	
 					try:
 						# print("(%s) link scanned. " % (str(x)))
-						text = requests.get(url).content.decode('utf-8')
+						texte = requests.get(url).text
 						# print("Search...")
 						combo = re.search(email+r":([a-zA-Z0-9_]+)", texte).group()
 						if combo:
@@ -925,7 +941,7 @@ def searchGoogle(requete='', requete2=''):
 	}
 
 	if requete2 != '':
-		content = requete2.content.decode('utf-8')
+		content = requete2.text #.content.decode('utf-8')
 		urls = re.findall('url\\?q=(.*?)&', content)
 		for url in urls:
 			for char in encodeList:
@@ -940,7 +956,7 @@ def searchGoogle(requete='', requete2=''):
 	else:
 		pass
 
-	content = requete.content.decode('utf-8')
+	content = requete.text
 	urls = re.findall('url\\?q=(.*?)&', content)
 	for url in urls:
 		for char in encodeList:
@@ -1174,7 +1190,7 @@ def doxMaker():
 	adresse = input("Adresse : ")
 	cp = input("Code postal : ")
 	ip = input("adresse IP : ")
-	nameFichier = prenom.capitalize()+'_'+nom.capitalize()+'.txt'
+	nameFichier = prenom.capitalize()+'_'+nom.replace(" ", "_").capitalize()+'.txt'
 	if os.path.exists("Watched"):
 		pass
 	else:

@@ -43,7 +43,7 @@ Features
 	- Dox maker
 	- Exif read 
 	- Twitter
-	- Instgram
+	- Instagram
 	- Facebook
 
  - Social engineering:
