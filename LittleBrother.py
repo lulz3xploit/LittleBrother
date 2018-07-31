@@ -1,19 +1,100 @@
 # -*- coding: utf-8 -*-
 
-import os
+__version__ = 4.0
+
+import sys, os, time
+
+def checkVersion():
+	version = sys.version[:1]
+	if int(version) == 3:
+		pass
+	else:
+		sys.exit("[!] Veuillez lancer la version 3 de python.")
+
+checkVersion()
+
+def clear():
+	if os.name == 'nt':
+		return os.system('cls')
+	else:
+		return os.system('clear')
+
+def loading():
+
+	libList = []
+
+
+	string = ['S','t', 'a', 'r', 't', ' ',  'l', 'i', 't', 't', 'l', 'e', 'b', 'r', 'o', 't', 'h', 'e', 'r']
+	nb = len(string)
+
+	x = 0
+	while x < nb:
+		c = string[x]
+		c = c.upper()
+		string[x] = c
+		sys.stdout.write(''.join(string) +'...')
+		time.sleep(0.1)
+		c = string[x]
+		c = c.lower()
+		string[x] = c
+		x = x + 1
+		sys.stdout.write('                            \r')
+
+loading()
+
 import requests
 from bs4 import BeautifulSoup
 import re
+from terminaltables import SingleTable, AsciiTable
 import smtplib
+import random
 import socket
 import webbrowser
-import sys
 import json
-import time
 from datetime import date
+# from bannerText import lb_header
 
 # from PIL import Image
 # from PIL.ExifTags import TAGS
+
+class receiveSms:
+
+	def searchServer(self):
+		url = "https://www.receive-sms-online.info/"
+
+		req = requests.get(url)
+		page = req.content
+
+		serverList = re.findall(r"<a href=\"([0-9]+)-([a-zA-Z0-9_]+)", page.decode('utf-8'))
+		serverOnline = []
+
+		n = 1
+
+		for server in serverList:
+			numero = server[0]
+			country = server[1]
+			tupleServer = (str(n), numero, country)
+			serverOnline.append(tupleServer)
+			# print("[%s] %s - +%s" % (str(n), country, numero))
+			n = n + 1
+
+		self.server_list = serverOnline
+		self.url_of_site = url
+	
+	def sms(self, url):
+
+		req = requests.get(url)
+		page = req.content.decode('utf-8')
+		fromUsersList = re.findall(r"data-label=\"From   :\">([a-zA-Z0-9_ +]+)</td>", page)
+		messagesList = re.findall(r"data-label=\"Message:\">(.*)</td>", page)
+		timeAgoList = re.findall(r"data-label=\"Added:\">(.*)</td>", page)
+
+		regroup = zip(fromUsersList, messagesList, timeAgoList)
+
+		self.contentMessages = regroup
+		self.messageText = messagesList[1]
+		self.fromUser = fromUsersList[1] 
+		self.count = int(len(fromUsersList))
 
 class instagramGetInfo:
 
@@ -206,14 +287,14 @@ class facebookSearchTool:
 
 		try:
 			page = requests.get(url % (name)).content.decode('utf-8')
-		except urllib2.HTTPError:
+		except:
 			print("[!] Aucun resultat.")
-			quit()
 
 		data = page
 
 		urlsAccount = re.findall('http[s]?://www.facebook.com/(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', data)
-		nameAccount = re.findall("width=\"100\" height=\"100\" alt=\"([a-zA-Z0-9_ ,]+)", data)
+		nameAccount = re.findall("width=\"100\" height=\"100\" alt=\"([a-zA-Z0-9_ é , ]+)", data)
+		# print(nameAccount)
 
 		urlList = []
 
@@ -229,12 +310,16 @@ class facebookSearchTool:
 		for u in urlsAccount:
 			if "/public/" in u or "/login.php" in u or "/recover" in u or "/help/" in u:
 				pass
+			elif "directory/pages_variations/" in u:
+				pass
+			elif "login/" in u:
+				pass
+			elif "&" in u:
+				pass
+			elif "/pages/" in u:
+				pass
 			else:
-				if "/pages/" in u:
-					pass
-
-				else:
-					urlList.append(u)
+				urlList.append(u)
 
 		usersAccount = []
 
@@ -331,13 +416,6 @@ def times():
 	times = str(times)
 	return times
 
-def checkVersion():
-	version = sys.version[:1]
-	if int(version) == 3:
-		pass
-	else:
-		sys.exit("[!] Veuillez lancer la version 3 de python.")
-
 def searchTwitter():
 	username = input("\n[#][LittleBrother][Lookup][Username:~$ ")
 	twitool = twitterSearchTool()
@@ -397,27 +475,6 @@ def searchInstagram():
 	print("[+] Publication: %s" % (publication))
 	print("[+] Bio: %s" % (bio))
 
-def phoneNumber(num):
-	phone = searchInfoNumero()
-	phone.search(num)
-	city = phone.city
-	operator = phone.operator
-	date = phone.date.title()
-	location = phone.location
-	_type = phone.phone_type
-	# print("\n[%s]" % (num))
-	print(" + Telephone: %s" % (_type))
-	if location:
-		print(" + Secteur: %s" % (location))
-	else:
-		pass
-	try:
-		print(" + Ville: %s" % (city))
-	except:
-		pass
-	print(" + Operateur: %s" % (operator))
-	print(" + Date: %s" % (date))
-
 def testConnexion():
 	try:
 		req = requests.get('http://google.com')
@@ -435,12 +492,6 @@ def mkdir(dossier):
 			return(os.mkdir(dossier))
 		except OSError:
 			print("[!] Une erreur est survenu lors du creation du dossier.")
-
-def clear():
-	if os.name == 'nt':
-		return os.system('cls')
-	else:
-		return os.system('clear')
 
 def pause():
 	input("\n Appuyez sur [ENTER] pour retourner au Menu.")
@@ -534,6 +585,8 @@ def facebookStalk():
     [26] Evenements passes
     [27] Jeux
     [28] Apps
+
+        [b] Back    [c] Clear screen    [e] Exit script
 	"""
 
 	dicFbStalk = {
@@ -625,12 +678,12 @@ def facebookStalk():
 			s = input("\n[#][LittleBrother][Lookup][StalkFB:~$ ")
 			if s == "help":
 				print(helpMsgFbStalk)
-			elif s == "clear":
+			elif s.lower() == "c":
 				clear()
 				print(menuStalk)
-			elif s == "back":
+			elif s.lower() == "b":
 				break
-			elif s == "exit" or s == "quit":
+			elif s.lower() == "e":
 				quit()
 			else:
 				if str(s) == '29':
@@ -672,6 +725,9 @@ def bssidFinder():
 def ipFinder():
 	ip = input("\n[#][LittleBrother][Lookup][AdresseIP:~$ ")
 	# clear()
+
+	TABLE_DATA = []
+
 	url = "https://extreme-ip-lookup.com/json/"
 	data = requests.get(url+ip).content.decode('utf-8')
 	values = json.loads(data)
@@ -682,43 +738,84 @@ def ipFinder():
 		print("[!] IP not valid o.o'")
 
 	else:
-		print("[ %s ]" % (ip))
-		print("\n IP: " + ip)
-		print(" Hostname: " + values['ipName'])
-		print(" ISP: " + values['isp'])
-		print(" Organisation: "+values['org'])
-		print(" Pays: " + values['country'])
-		print(" Region: " + values['region'])
-		print(" Ville: " + values['city'])
-		localisation = str(values['lat']) + ','+str(values['lon'])
-		print(" Localisation: "+localisation)
-		print(" + Maps: https://www.google.fr/maps?q=%s" % (localisation))
+		infos = ("IP", ip)
+		TABLE_DATA.append(infos)
+		infos = ("Hostname", values['ipName'])
+		TABLE_DATA.append(infos)
+		infos = ("ISP", values['isp'])
+		TABLE_DATA.append(infos)
+		infos = ("Organisation", values['org'])
+		TABLE_DATA.append(infos)
+		infos = ("Pays", values['country'])
+		TABLE_DATA.append(infos)
+		infos = ("Region", values['region'])
+		TABLE_DATA.append(infos)
+		infos = ("Ville", values['city'])
+		TABLE_DATA.append(infos)
+		localisation = values['lat']+', '+values['lon']
+		infos = ("Localisation", localisation)
+		TABLE_DATA.append(infos)
+		infos = ("Maps", "https://www.google.fr/maps?q="+localisation)
+		TABLE_DATA.append(infos)
+
+		table = SingleTable(TABLE_DATA, ip)
+		print("\n"+table.table)
+		# print("[ %s ]" % (ip))
+		# print("\n IP: " + ip)
+		# print(" Hostname: " + values['ipName'])
+		# print(" ISP: " + values['isp'])
+		# print(" Organisation: "+values['org'])
+		# print(" Pays: " + values['country'])
+		# print(" Region: " + values['region'])
+		# print(" Ville: " + values['city'])
+		# localisation = str(values['lat']) + ','+str(values['lon'])
+		# print(" Localisation: "+localisation)
+		# print(" + Maps: https://www.google.fr/maps?q=%s" % (localisation))
 
 def SearchEmail4():
 	email = input("\n[#][LittleBrother][Lookup][Email:~$ ")
 	# email = email.replace("@", "%40")
 	# clear()
 	# url = "https://www.google.com/search?num=100&q=\%s\\"
+
+	table_dump = [
+		('Email', 'Password'),
+	]
+
 	url = "https://www.google.fr/search?num=100&q=\\intext:\"%s\"\\"
 	content = requests.get(url % (email)).text
 	urls = re.findall('url\\?q=(.*?)&', content)
 	cout = len(urls)
-	print("[*] Scan %s Link..." % (str(cout)))
-	x = 1
-	for url in urls:
-		if not "googleusercontent" in url:
-			if not "/settings/ads" in url:
-				if not "webcache.googleusercontent.com/" in url:	
-					try:
-						# print("(%s) link scanned. " % (str(x)))
-						texte = requests.get(url).text
-						# print("Search...")
-						combo = re.search(email+r":([a-zA-Z0-9_]+)", texte).group()
-						if combo:
-							print("[+] %s" % (combo))
-					except:
-						print("[?] %s " % (url))
-					# x = x + 1
+	if cout == 0:
+		print("[!] Aucun resultat.")
+	else:
+		print("[*] Scan %s Link..." % (str(cout)))
+		x = 1
+		countPassword = 0
+		for url in urls:
+			if not "googleusercontent" in url:
+				if not "/settings/ads" in url:
+					if not "webcache.googleusercontent.com/" in url:
+						if not "/policies/faq" in url:	
+							try:
+								# print("(%s) link scanned. " % (str(x)))
+								texte = requests.get(url).text
+								# print("Search...")
+								combo = re.search(email+r":([a-zA-Z0-9_ & * $ - ! / ; , ? + =  | \. ]+)", texte).group()
+								if combo:
+									passw = combo.split(":")[1]
+									tuples = (email, passw)
+									countPassword += 1
+									table_dump.append(tuples)
+									# print("[+] %s" % (combo))
+							except:
+								print("[?] %s " % (url))
+							# x = x + 1
+		if countPassword > 0:
+			table = SingleTable(table_dump, " Dump ")
+			print("\n"+table.table)
+		else:
+			pass
 
 def Search118218():
 	url = "http://www.118218.fr/recherche?category_id=&geo_id=&distance=46&category=&who=%s&where=%s"
@@ -798,7 +895,7 @@ def searchCopainsdavant(nom, city):
 		birthdayList0 = soup.find_all("abbr", {"class": "bday"})
 		item = len(birthdayList0)
 		if item == 0:
-		 	birthdayList0.append("None.")
+		 	birthdayList0.append("None")
 	
 		for b in birthdayList0:
 			birthdayList.append(str(b))
@@ -806,7 +903,7 @@ def searchCopainsdavant(nom, city):
 		travailList0 = soup.find_all("p", {"class": "title"})
 		item = len(travailList0)
 		if item == 0:
-		 	travailList0.append("None.")
+		 	travailList0.append("None")
 	
 		for t in travailList0:
 			travailList.append(str(t))
@@ -829,18 +926,36 @@ def searchCopainsdavant(nom, city):
 		travailList2.append(travail)
 
 	regroup = zip(namesList2, addressesList2, birthdayList2, travailList2, urlList2)
+
+	title = " Copain D'avant "
+
+	TABLE_DATA = [
+		('Name', 'Adresse', 'Date', 'Work', 'url'),
+	]
+
+
+	count = 0
+
 	for info in regroup:
+		count += 1
 		name = info[0]
 		adresse = info[1]
+		adresse = adresse.split(" - ")[0]
 		dateBirthday = info[2]
+		try:
+			dateBirthday = dateBirthday.split(" - ")[1]
+		except:
+			pass
 		travail = info[3]
 		url = info[4]
-		print("\n[Copaindavant] %s - %s" % (name, url))
-		print("(+) Ville: %s" % (adresse))
-		print("(+) Date: %s" % (dateBirthday))
-		if travail != "None.":
-			print("(+) Profession: %s" % (travail))
 
+		infos = (name, adresse, dateBirthday, travail, url)
+
+		TABLE_DATA.append(infos)
+
+	if count > 0:
+		table_instance = SingleTable(TABLE_DATA, title)
+		print(table_instance.table)
 
 def searchPJ(requete='', num=''):
 	def testResponse(requete):
@@ -849,13 +964,14 @@ def searchPJ(requete='', num=''):
 			return 1
 			# print("[!] Aucun resultattttt pour votre recherche... o_o' ")
 
-	page = requete.content.decode('utf-8')
+	page = requete.text #content.decode('utf-8')
 	soup = BeautifulSoup(page, "html.parser")
 	rep = testResponse(requete)
 	if rep == 1:
 		print("[!] Aucun resultat pour votre recherche... o_o'")
 		if num != '':
-			phoneNumber(num)
+			# phoneNumber(num)
+			pass
 		else:
 			pass
 	else:
@@ -875,27 +991,45 @@ def searchPJ(requete='', num=''):
 	namesList2 = []
 	addressesList2 = []
 	numesList2 = []
+	operatorList = []
 
 	# try:
 	for name in nameList:
-		namesList2.append(name.string)
+		namesList2.append(name.text.strip())
 	for addresse in addressList:
-		addressesList2.append(addresse.string)
+		addressesList2.append(addresse.text.strip())
 	for num in numList:
-		numesList2.append(num.string)
+		phone = searchInfoNumero()
+		phone.search(num.text.strip())
+		operator = phone.operator
+		operatorList.append(operator) 
+		numesList2.append(num.text.strip())
 	# except:
+	# 	pass
 	# 	print("[!] Aucun resultat pour votre recherche... o_o'")
 
-	regroup = zip(namesList2,addressesList2,numesList2)
+	regroup = zip(namesList2,addressesList2,numesList2, operatorList)
+	
+	title = " Particulier "
+
+	TABLE_DATA = [
+		('Name', 'Adresse', 'Phone', 'Operateur'),
+	]
+
+	listeInfos = []
+
 	for infos in regroup:
-		#print("\nNom Prenom: "+infos[0]+"\nAdresse: "+infos[1]+"\nNumero: "+infos[2])
-		name = infos[0]
-		adresse = infos[1]
-		num = infos[2]
+		
 		try:
-			printResult(name.strip(), adresse.strip(), num.strip())
+
+			TABLE_DATA.append(infos)
+
 		except AttributeError:
 			pass
+
+	if rep != 1:
+		table_instance = SingleTable(TABLE_DATA, title)
+		print("\n"+table_instance.table)
 
 def searchGoogle(requete='', requete2=''):
 
@@ -951,6 +1085,7 @@ def searchGoogle(requete='', requete2=''):
 					url = url.replace(char, charDecode)
 			if not "googleusercontent" in url:
 				if not "/settings/ads" in url:
+					if not "/policies/faq" in url:
 					# if "insta" in url or "twitter" in url or "facebook" in url:
 						print("[++] Possible connection: "+url)
 	else:
@@ -966,60 +1101,85 @@ def searchGoogle(requete='', requete2=''):
 				url = url.replace(char, charDecode)
 		if not "googleusercontent" in url:
 			if not "/settings/ads" in url:
+				if not "/policies/faq" in url:
 				# if "insta" in url or "twitter" in url or "facebook" in url:
 					print("[+] Possible connection: "+url)
 
 def searchPersonne():
 	nom = input("\n[#][LittleBrother][Lookup][Prenom Nom:~$ ")
 	city = input("\n[#][LittleBrother][Lookup][Ville/Departement:~$ ")
-	# clear()
-	url = "https://www.pagesjaunes.fr/pagesblanches/recherche?quoiqui={}&ou={}"
-	requete = requests.get(url.format(nom, city))
 	print("[*] Recherche...")
-	searchPJ(requete)
-	# print("\n[*] Recherche Facebook...")
+
 	try:
+# Page Jaune search
+		url = "https://www.pagesjaunes.fr/pagesblanches/recherche?quoiqui={}&ou={}"
+		headers = {'User-agent': 'Chrome/34.0.1847.116'}
+		requete = requests.get(url.format(nom, city), headers=headers)
+		searchPJ(requete)
+
+# Copain d'avant search
 		searchCopainsdavant(nom, city)
-		
+
+# Facebook search		
 		fbtool = facebookSearchTool()
 		accountsFb = fbtool.searchFacebook(nom)
+
+		title = " Facebook "
+
+		TABLE_DATA = [
+			('Name', 'User', 'Location'),
+		]
+
+		count = 0
+
 		for a in accountsFb:
+			count += 1
 			name = a[1]
 			username = a[0]
-			print("\n[Facebook] %s - %s" % (name, username))
 			fbtool.getInfoProfile(username)
 			loc = fbtool.location
+			if loc == "None":
+				loc = ""
+			else:
+				loc = ", ".join(loc)
 			work = fbtool.work
-			if loc != "None":
-				print("(+) Location:  %s" % (loc))
-			if work != "None":
-				print("(+) Travail: %s" % (work))
+			tuples = (name, username, loc)
+			# listeInfos.append(tuples)
+			TABLE_DATA.append(tuples)
 		
-		# searchFacebook(nom)
+		if count > 0:
+			table_instance = SingleTable(TABLE_DATA, title)
+			print(table_instance.table)
+		
+# Twitter Search		
+		title = " Twitter "
+
+		TABLE_DATA = [
+			('Name', 'User', 'Date', 'Location'),
+		]
 
 		twitool = twitterSearchTool()
 		accountTwitter = twitool.searchTwitter(nom)
+
+		count = 0
+
 		for a in accountTwitter:
+			count += 1
 			name = a[1]
 			username = "@"+a[0]
-			print("\n[Twitter] %s - %s" % (name, username))
 			twitool.getInfoProfile(a[0])
 			
 			location = twitool.location
 			date = twitool.birth
 			bio = twitool.description
 			url = twitool.url
-			
-			if bio:
-				print("(+) Bio: %s" % (bio))
-			if location:
-				print("(+) Ville: %s" % (location))
-			if date != "None":
-				print("(+) Naissance: %s"  % (date))
-			if url:
-				print("(+) Url: %s" % (url))
 
-		# searchTwitterPersonne(nom)
+			tuples = (name, username, date, location)
+			TABLE_DATA.append(tuples)
+
+		if count > 0:
+			table_instance = SingleTable(TABLE_DATA, title)
+			print(table_instance.table)
 
 	except IOError:
 		pass
@@ -1028,18 +1188,40 @@ def searchAdresse():
 	adresse = input("\n[#][LittleBrother][Lookup][Adresse:~$ ")
 	# clear()
 	url = "https://www.pagesjaunes.fr/pagesblanches/recherche?quoiqui=&ou="
-	requete = requests.get(url+adresse)
+	headers = {'User-agent': 'Chrome/34.0.1847.116'}
+	requete = requests.get(url+adresse, headers=headers)
 	searchPJ(requete)
 
 def searchNumber():
 	num = input("\n[#][LittleBrother][Lookup][Phone:~$ ")
-	# clear()
-	#print("[*] Recherche...")
 	url = "https://www.pagesjaunes.fr/annuaireinverse/recherche?quoiqui="
-	requete = requests.get(url+num)
-	#phoneNumber(num)
+	headers = {'User-agent': 'Chrome/34.0.1847.116'}
+	requete = requests.get(url+num, headers=headers)
 	searchPJ(requete=requete, num=num)
-	# phoneNumber(num)
+	phone = searchInfoNumero()
+	phone.search(num)
+
+	TABLE_DATA = []
+
+	city = phone.city
+	operator = phone.operator
+	date = phone.date.title()
+	location = phone.location
+	_type = phone.phone_type
+
+	infos = ("Numero", num)
+	TABLE_DATA.append(infos)
+	infos = ("Type", _type)
+	TABLE_DATA.append(infos)
+	infos = ("Operateur", operator)
+	TABLE_DATA.append(infos)
+	infos = ("Localisation", location)
+	TABLE_DATA.append(infos)
+	infos = ("Date", date)
+	TABLE_DATA.append(infos)
+
+	table = SingleTable(TABLE_DATA)
+	print("\n"+table.table)
 
 def searchUserName():
 	username = input("\n[#][LittleBrother][Lookup][Pseudo:~$ ")
@@ -1079,65 +1261,90 @@ def exifRead():
 	except:
 		print("[!] Failed")
 
-def reveiveSms():
+def receive_sms():
+	def logTimes():
+		times = time.strftime("%H:%M:%S")
+		times = str(times)
+		today = date.today()
+		return(today, times)
+
+	dates, times = logTimes()
+	receive = receiveSms()
+	receive.searchServer()
 	
-	url = "https://www.receive-sms-online.info/"
+	servers = receive.server_list
+	numDic = {}
+	url = receive.url_of_site
 
-	page = requests.get(url).content.decode('utf-8')
+	title = ' Server '
 
-	serverList = re.findall(r"<a href=\"([0-9]+)-([a-zA-Z0-9_]+)", page)
+	TABLE_DATA = [
+		('ID', 'Numeo', 'Country'),
+	]
 
-	print("[*] Server online: \n")
+	for num in servers:
+		index = num[0]
+		numero = num[1]
+		country = num[2]
 
-	dicNum = {}
-
-	n = 1
-
-	for server in serverList:
-		numero = server[0]
-		country = server[1]
-
-		dicNum[str(n)] = numero+'-'+country
-		print("[%s] %s - +%s" % (str(n), country, numero)) 
-		n = n + 1
+		numDic[index] = numero+'-'+country
+	
+		tuples = (index, "+"+numero, country)
+		TABLE_DATA.append(tuples)
+	
+	table_instance = SingleTable(TABLE_DATA, title)
+	print(table_instance.table)
 
 	while True:
-		s = input("\n[#][LittleBrother][SETool][Server Num:~$ ")
+		s = input("\n[#][LittleBrother][SETool][Server ID:~$ ")
 		try:
 			int(s)
-			path = dicNum.get(str(s))
+			path = numDic.get(str(s))
 			break
 		except:
 			pass
 
-	page = requests.get(url+path).content.decode('utf-8')
-	
-	# print(page)
+	url = url+path
 
-	fromUsersList = re.findall(r"data-label=\"From   :\">([a-zA-Z0-9_]+)</td>", page)
-	messagesList = re.findall(r"data-label=\"Message:\">(.*)</td>", page)
-	timeAgoList = re.findall(r"data-label=\"Added:\">(.*)</td>", page)
+	receive.sms(url)
 
-	regroup = zip(fromUsersList, messagesList, timeAgoList)
+	lastMsg = receive.messageText
 
-	for sms in regroup:
-		user = sms[0]
-		message = sms[1]
-		time = sms[2]
+	dates, times = logTimes()
+	print("[I] Press 'Ctrl + C' pour quitter")
+	print("[%s/%s] Last message: %s" % (dates, times, lastMsg))
+	print("[%s/%s] Listen..." % (dates, times))
 
-		print("\n============\n%s (%s) :\n%s\n=============" % (user, time, message))
+	try:
+		while True:
+			receive2 = receiveSms()
+			receive2.sms(url)
+			newMsg = receive2.messageText
+
+			if newMsg != lastMsg:
+				dates, times = logTimes()
+				print("[%s/%s] New Message !" % (dates, times))
+				messages = receive2.messageText
+				user = receive2.fromUser
+				print("\n============ MESSAGE ============\nFrom: %s\nContent: %s\n=================================" % (user, messages))
+				lastMsg = newMsg
+			else:
+				pass
+	except KeyboardInterrupt:
+		dates, times = logTimes()
+		print("\n[%s/%s] Arret..." % (dates, times))
 
 def mailToIP():
 	def isp_host(ip):
 		url = "http://ip-api.com/json/" + ip
 		response = requests.get(url).content.decode('utf-8')
-		values = json.loads(data)
+		values = json.loads(response)
 		return values['isp']
 
 	def ip_loc(ip):
 		url = "https://extreme-ip-lookup.com/json/" + ip
 		response = requests.get(url).content.decode('utf-8')
-		values = json.loads(data)
+		values = json.loads(response)
 
 		return(values['country']+', '+values['region']+', '+ values['city'])
 
@@ -1233,231 +1440,551 @@ def doxMaker():
 	print("\n[+] Fichier enregistre dans : 'Watched/"+nameFichier+"'")
 
 def showDataBase():
-	fichiers = {}
-	x = 0
-	if os.path.exists("Watched"):
-		pass
-	else:
-		mkdir("Watched")
-	datas = os.listdir("Watched")
-	for c in datas:
-		x = x+1
-	if str(x) == '0':
-		print("[!] Aucun fichier dans la base de donnee.")
-	else:
-		print("[*] %s Fichiers dans la base de donnee.\n" % (str(x)))
+	def reverseName(name):
+		nameSplit = name.split(" ")
+		nameReversed = "%s %s" % (nameSplit[1], nameSplit[0])
+		return(nameReversed.capitalize())
+
+	def nameToFile(name):
+		nameSplit = name.split(" ")
+		nameCapital = []
+		for n in nameSplit:
+			nameCapital.append(n.capitalize())
+
+		nameFile = nameCapital[0] + '_' + nameCapital[1] + '.txt'
+
+		return(nameFile) 
+
+	def readProfile(name):
+		f = open('Watched/'+name, 'r')
+		print("")
+		for l in f:
+			l = l.strip()
+			print("%s" % (l))
+
+	def showAllProfiles(ProfilesDic):
+
+		table_data = [
+			('ID', 'Name'),
+		]
+
+		for p in ProfilesDic:
+			name = p
+			num = ProfilesDic.get(name)
+			name = name.replace("_", " ").replace(".txt", "")
+
+			tuples = (str(num), name)
+			table_data.append(tuples)
+
+		table = AsciiTable(table_data)
+		print(table.table)
+
+	def searchProfiles():
+		name = input("Name/ID: ")
+		nameType =''
+
+		try:
+			int(name)
+			nameType = 'ID'
+		except:
+			pass
+
+		if nameType == 'ID' :
+			numId = name
+			print("[*] Search ID %s..." % (name))
+			for p in ProfilesDic:
+				num = ProfilesDic.get(p)
+				if num == int(numId):
+					nameFile = p
+					break
+				else:
+					nameFile = None
+				# print(str(num)+'          ' + p)
+
+
+
+			if nameFile is None:
+				print("[!] ID not found.")
+			else:
+				name = nameFile.replace("_", " ").replace(".txt", "")
+				print("[+] Profile '%s' found." % (name))
+				print("[ID] %s" % (numId))
+				readProfile(nameFile)
+
+		else:
+			nameFile = nameToFile(name)
+
+			find = ProfilesDic.get(nameFile)
+			
+			if not find:
+				nameReversed = reverseName(name)
+				nameReversedFile = nameToFile(nameReversed)
+				find = ProfilesDic.get(nameReversedFile)
+				
+				if not find:
+					print("[!] No profiles found for '%s'." % (name))
+					# print("[?] View all profiles [ Y / N ]")
+					# s = input(" ")
+					# if s.upper() == 'Y':
+					# 	showAllProfiles(ProfilesDic)
+					# else:
+					# 	pass
+				
+				else:
+					num = ProfilesDic.get(nameReversedFile)
+					print("[+] Profile found for name: %s." % (nameReversed))
+					print("[*] Loading Profile...")
+					print("[ID] %s" % (str(num)))
+					readProfile(nameReversedFile)
+			else:
+				num = ProfilesDic.get(nameFile)
+				print("[+] Profile '%s' found." % (name))
+				print("[*] Loading Profile...")
+				print("[ID] %s" % (str(num)))
+				readProfile(nameFile)
+
+
+	helpMsg = """
+ Name                      Action
+ ----                      ------
+ Search Profiles           Recherche un profile dans la base de donnee.
+ Show all Profiles         Affiche tout les profiles de la base de donnee.
+
+ Exit Database             Quitte la base de donnee pour retourner au menu principal.
+ Help message              Affiche se message
+"""
+
+	menuLogo = """
+      :::::::::      ::: ::::::::::: :::           
+     :+:    :+:   :+: :+:   :+:   :+: :+:          
+    +:+    +:+  +:+   +:+  +:+  +:+   +:+          
+   +#+    +:+ +#++:++#++: +#+ +#++:++#++:          
+  +#+    +#+ +#+     +#+ +#+ +#+     +#+           
+ #+#    #+# #+#     #+# #+# #+#     #+#            
+#########  ###     ### ### ###     ###             
+      :::::::::      :::      ::::::::  :::::::::: 
+     :+:    :+:   :+: :+:   :+:    :+: :+:         
+    +:+    +:+  +:+   +:+  +:+        +:+          
+   +#++:++#+  +#++:++#++: +#++:++#++ +#++:++#      
+  +#+    +#+ +#+     +#+        +#+ +#+            
+ #+#    #+# #+#     #+# #+#    #+# #+#             
+#########  ###     ###  ########  ##########       
+"""
+		
+	menu = "\n[s] Search Profiles     [a] Show all Profiles    [e] Exit Database    [c] Clear screen   [h] Help message"
+
+	clear()
+	print(menuLogo)
+	print("[*] Access to the Database...")
+	print("[*] Search Data...")
+
+	ProfilesDic = {}
 	x = 1
+		
+	if os.path.exists("Watched"):
+		print("[+] Data Found.")
+	
+	else:
+		print("[!] Data not found ! ")
+		print("[?] Want to create a new folder ? [ Y / N ]")
+		s = input(" ")
+		
+		if s.upper() == 'Y':
+			mkdir("Watched")
+			print("[+] The file was successfully created.")
+		
+		else:
+			pass
+		
+	datas = os.listdir("Watched")
+	
 	for data in datas:
-		print("%s) %s" % (str(x), data))
-		fichiers[str(x)] = data
+		# print("%s) %s" % (str(x), data.replace(".txt", "")))
+		ProfilesDic[data] = x
 		x = x + 1
 	
-	print("\n[I] Entrez le numero d'un fichier pour lire le contenu.")
-	print(" ou entrez 'back' pour revenir au menu principal.")
+		if str(x) == '0':
+			print("[!] No profiles found.")
 	
-	while True:
-		action = input("\n[#][LittleBrother][Database:~$ ")
-		try:
-			action = int(action)
-			if action <= x:
-				fichier = fichiers.get(str(action))
+	else:
+		profilesCount = x-1
+		print("[+] %s Profiles Found." % (str(profilesCount)))
+	
+		while True:
+			print(menu)
+	
+			choix = input("\n[#][LittleBrother][Database:~$ ")
+			
+			if choix.lower() == 'h':
+				print(helpMsg)
+			elif choix.lower() == 's':
+				searchProfiles()
+			elif choix.lower() == 'a':
+				showAllProfiles(ProfilesDic)
+			elif choix.lower() == 'c':
 				clear()
-				f = open('Watched/'+fichier, 'r')
-				print("[ %s ]\n" % (fichier))
-				for l in f:
-					l = l.strip()
-					print("---- %s" % (l))
+				print(menuLogo)
+			elif choix.lower() == 'e':
 				break
-		except ValueError:
-			if action.lower() == "back":
-				clear()
-				print(menu)
-				break
+			else:
+				print("Command not found")
 
-helpDataBase = """
-		showdb : Affiche les elements dans la base de donnee.
-		show <name> : Affiche le contenu du fichier.
-		
-		exit / quit  : Pour quitter le logiciel.
-		clear : Efface l'ecran."""
 
-helpMsg = """
-		lookup : Faire des recherches sur une personne. 
-		setool : Utiliser des outils pour du social engineering.
-		make : Creer un fichier '.txt' avec toute les infos obtenu.
-		db : Accedez a la base de donnee.
+header1 = """
+  _      _ _   _   _      ____            _   _               
+ | |    (_) | | | | |    |  _ \          | | | |              
+ | |     _| |_| |_| | ___| |_) |_ __ ___ | |_| |__   ___ _ __ 
+ | |    | | __| __| |/ _ \  _ <| '__/ _ \| __| '_ \ / _ \ '__|
+ | |____| | |_| |_| |  __/ |_) | | | (_) | |_| | | |  __/ |   
+ |______|_|\__|\__|_|\___|____/|_|  \___/ \__|_| |_|\___|_|   
+"""
 
-		exit / quit  : Pour quitter le logiciel.
-		clear : Efface l'ecran."""
+header2 = """
+
+ /$$       /$$   /$$     /$$     /$$           /$$$$$$$                        /$$     /$$                          
+| $$      |__/  | $$    | $$    | $$          | $$__  $$                      | $$    | $$                          
+| $$       /$$ /$$$$$$ /$$$$$$  | $$  /$$$$$$ | $$  \ $$  /$$$$$$   /$$$$$$  /$$$$$$  | $$$$$$$   /$$$$$$   /$$$$$$ 
+| $$      | $$|_  $$_/|_  $$_/  | $$ /$$__  $$| $$$$$$$  /$$__  $$ /$$__  $$|_  $$_/  | $$__  $$ /$$__  $$ /$$__  $$
+| $$      | $$  | $$    | $$    | $$| $$$$$$$$| $$__  $$| $$  \__/| $$  \ $$  | $$    | $$  \ $$| $$$$$$$$| $$  \__/
+| $$      | $$  | $$ /$$| $$ /$$| $$| $$_____/| $$  \ $$| $$      | $$  | $$  | $$ /$$| $$  | $$| $$_____/| $$      
+| $$$$$$$$| $$  |  $$$$/|  $$$$/| $$|  $$$$$$$| $$$$$$$/| $$      |  $$$$$$/  |  $$$$/| $$  | $$|  $$$$$$$| $$      
+|________/|__/   \___/   \___/  |__/ \_______/|_______/ |__/       \______/    \___/  |__/  |__/ \_______/|__/                                                                                                                       
+"""
+
+header5 = """
+ ___        __  ___________  ___________  ___       _______                  
+|"  |      |" \\("     _   ")("     _   ")|"  |     /"     "|                 
+||  |      ||  |)__/  \\__/  )__/  \\__/ ||  |    (: ______)                 
+|:  |      |:  |   \\_ /        \\_ /    |:  |     \\/    |                   
+ \\  |___   |.  |   |.  |        |.  |     \\  |___  // ___)_                  
+( \\_|:  \\  /\\  |\\  \\:  |        \\:  |    ( \\_|:  \\(:      "|                 
+ \\_______)(__\\_|_)  \\__|         \\__|     \\_______)\\_______)                                                                               
+ _______    _______     ______  ___________  __    __    _______   _______   
+|   _  "\\  /"      \\   /    " \\("     _   ")/" |  | "\\  /"     "| /"      \\  
+(. |_)  :)|:        | // ____  \\)__/  \\__/(:  (__)  :)(: ______)|:        | 
+|:     \\/ |_____/   )/  /    ) :)  \\_ /    \\/      \\/  \\/    |  |_____/   ) 
+(|  _  \\  //      /(: (____/ //   |.  |    //  __  \\  // ___)_  //      /  
+|: |_)  :)|:  __   \\ \\        /    \\:  |   (:  (  )  :)(:      "||:  __   \\  
+(_______/ |__|  \\___) \"_____/      \\__|    \\__|  |__/  \\_______)|__|  \\___) 
+"""
+
+header6 = """
+ _      ____  ______  ______  _        ___  ____   ____    ___   ______  __ __    ___  ____  
+| T    l    j|      T|      T| T      /  _]|    \\ |    \\  /   \\ |      T|  T  T  /  _]|    \\ 
+| |     |  T |      ||      || |     /  [_ |  o  )|  D  )Y     Y|      ||  l  | /  [_ |  D  )
+| l___  |  | l_j  l_jl_j  l_j| l___ Y    _]|     T|    / |  O  |l_j  l_j|  _  |Y    _]|    / 
+|     T |  |   |  |    |  |  |     T|   [_ |  O  ||    \\ |     |  |  |  |  |  ||   [_ |    \\ 
+|     | j  l   |  |    |  |  |     ||     T|     ||  .  Yl     !  |  |  |  |  ||     T|  .  Y
+l_____j|____j  l__j    l__j  l_____jl_____jl_____jl__j\\_j \\___/   l__j  l__j__jl_____jl__j\\_j
+"""
+
+header7 = """
+ _    _    _      _    _       ___             _    _             
+| |  <_> _| |_  _| |_ | | ___ | . > _ _  ___ _| |_ | |_  ___  _ _ 
+| |_ | |  | |    | |  | |/ ._>| . \| '_>/ . \ | |  | . |/ ._>| '_>
+|___||_|  |_|    |_|  |_|\___.|___/|_|  \___/ |_|  |_|_|\___.|_|                                                       
+"""
+
+header8 = """
+     _                   ______                        
+ ___/__) ,        /)    (, /    )           /)         
+(, /      _/__/_ //  _    /---(  __  ____/_(/    _  __ 
+  /    _(_(__(__(/__(/_) / ____)/ (_(_) (__/ )__(/_/ (_
+ (_____               (_/ (                            
+        )                                              
+"""
+
+header9 = """
+   __ _ _   _   _        ___           _   _               
+  / /(_) |_| |_| | ___  / __\_ __ ___ | |_| |__   ___ _ __ 
+ / / | | __| __| |/ _ \/__\// '__/ _ \| __| '_ \ / _ \ '__|
+/ /__| | |_| |_| |  __/ \/  \ | | (_) | |_| | | |  __/ |   
+\____/_|\__|\__|_|\___\_____/_|  \___/ \__|_| |_|\___|_|                                                              
+"""
+
+header11 = """
+  |     _)  |    |    |        __ )               |    |                 
+  |      |  __|  __|  |   _ \  __ \    __|  _ \   __|  __ \    _ \   __| 
+  |      |  |    |    |   __/  |   |  |    (   |  |    | | |   __/  |    
+ _____| _| \__| \__| _| \___| ____/  _|   \___/  \__| _| |_| \___| _|    
+"""
+
+header12 = """                                             
+ __    _ _   _   _     _____         _   _           
+|  |  |_| |_| |_| |___| __  |___ ___| |_| |_ ___ ___ 
+|  |__| |  _|  _| | -_| __ -|  _| . |  _|   | -_|  _|
+|_____|_|_| |_| |_|___|_____|_| |___|_| |_|_|___|_|  
+
+                 \\\\
+                  \\\\_   \\\\
+                   (')   \\\\_
+ LittleBrother -> / )=.---(') <- Privacy
+                o( )o( )_-\_
+"""
+
+header13 = """
+ __         __     ______   ______   __         ______                     
+/\ \       /\ \   /\__  _\ /\__  _\ /\ \       /\  ___\                    
+\ \ \____  \ \ \  \/_/\ \/ \/_/\ \/ \ \ \____  \ \  __\                    
+ \ \_____\  \ \_\    \ \_\    \ \_\  \ \_____\  \ \_____\                  
+  \/_____/   \/_/     \/_/     \/_/   \/_____/   \/_____/                  
+                                                                           
+ ______     ______     ______     ______   __  __     ______     ______    
+/\  == \   /\  == \   /\  __ \   /\__  _\ /\ \_\ \   /\  ___\   /\  == \   
+\ \  __<   \ \  __<   \ \ \/\ \  \/_/\ \/ \ \  __ \  \ \  __\   \ \  __<   
+ \ \_____\  \ \_\ \_\  \ \_____\    \ \_\  \ \_\ \_\  \ \_____\  \ \_\ \_\ 
+  \/_____/   \/_/ /_/   \/_____/     \/_/   \/_/\/_/   \/_____/   \/_/ /_/ 
+"""
+
+header14 = """
+    __    _ __  __  __     ____             __  __             
+   / /   (_) /_/ /_/ /__  / __ )_________  / /_/ /_  ___  _____
+  / /   / / __/ __/ / _ \/ __  / ___/ __ \/ __/ __ \/ _ \/ ___/
+ / /___/ / /_/ /_/ /  __/ /_/ / /  / /_/ / /_/ / / /  __/ /    
+/_____/_/\__/\__/_/\___/_____/_/   \____/\__/_/ /_/\___/_/          
+"""
+
+header15 = """                                                                                             
+,--.   ,--.  ,--.    ,--.  ,--.       ,-----.                  ,--.  ,--.                    
+|  |   `--',-'  '-.,-'  '-.|  | ,---. |  |) /_ ,--.--. ,---. ,-'  '-.|  ,---.  ,---. ,--.--. 
+|  |   ,--.'-.  .-''-.  .-'|  || .-. :|  .-.  \|  .--'| .-. |'-.  .-'|  .-.  || .-. :|  .--' 
+|  '--.|  |  |  |    |  |  |  |\   --.|  '--' /|  |   ' '-' '  |  |  |  | |  |\   --.|  |    
+`-----'`--'  `--'    `--'  `--' `----'`------' `--'    `---'   `--'  `--' `--' `----'`--'                                                                                                 
+"""
+
+header16 = """
+ _____   __ __   __   __         ______              __   __               
+|     |_|__|  |_|  |_|  |.-----.|   __ \.----.-----.|  |_|  |--.-----.----.
+|       |  |   _|   _|  ||  -__||   __ <|   _|  _  ||   _|     |  -__|   _|
+|_______|__|____|____|__||_____||______/|__| |_____||____|__|__|_____|__|                 
+"""
+
+header17 = """
+ ____ ____ ____ ____ ____ ____      
+||L |||i |||t |||t |||l |||e ||     
+||__|||__|||__|||__|||__|||__||     
+|/__\|/__\|/__\|/__\|/__\|/__\|     
+ ____ ____ ____ ____ ____ ____ ____ 
+||B |||r |||o |||t |||h |||e |||r ||
+||__|||__|||__|||__|||__|||__|||__||
+|/__\|/__\|/__\|/__\|/__\|/__\|/__\|
+"""
+
+header18 = """
+                                                              
+@@@      @@@ @@@@@@@ @@@@@@@ @@@      @@@@@@@@                
+@@!      @@!   @!!     @!!   @@!      @@!                     
+@!!      !!@   @!!     @!!   @!!      @!!!:!                  
+!!:      !!:   !!:     !!:   !!:      !!:                     
+: ::.: : :      :       :    : ::.: : : :: ::                 
+                                                              
+                                                              
+@@@@@@@  @@@@@@@   @@@@@@  @@@@@@@ @@@  @@@ @@@@@@@@ @@@@@@@  
+@@!  @@@ @@!  @@@ @@!  @@@   @!!   @@!  @@@ @@!      @@!  @@@ 
+@!@!@!@  @!@!!@!  @!@  !@!   @!!   @!@!@!@! @!!!:!   @!@!!@!  
+!!:  !!! !!: :!!  !!:  !!!   !!:   !!:  !!! !!:      !!: :!!  
+:: : ::   :   : :  : :. :     :     :   : : : :: ::   :   : : 
+"""
+
+def lb_header():
+
+    headers = [header1, header2, header5, header6, header7, header8, header9,
+        header11, header12, header13, header14, header15, header16, header17, header18]
+    return(random.choice(headers))
+
+helpMain = """
+ Name                       Action
+ ----                       ------
+ Lookup                     Faire des recherches sur une personne. 
+ Social engineering         Utiliser des outils pour du social engineering.
+ Make file                  Creer un fichier '.txt' pour y ecrire les infos obtenu.
+ Show Database              Accedez a la base de donnee.
+
+ Exit                       Quitter le logiciel.
+ Help                       Affiche se message.
+ Clear                      Efface l'ecran."""
 
 helpLookup = """
-		personne : Faire des recherches avec un nom, prenom et (ville).
-		pseudo : Faire des recherches avec un pseudonyme.  
-		adresse : Faire des recherches avec une adresse.
-		phone : Faire des recherches avec un numero de telephone.
-		ip : Faire des recherches avec une adresse IP.
-		bssid : Faire des recherches avec une adresse MAC/BSSID
-		email : Faire des recherches avec une adresse email.
-		mail : Faire des recherches avec l'entete d'un mail.
-		photo : Faire des recherches grace au MetaData d'une photo.
-		google : Faire des recherches sur google.
-		facebook: Faire des recherche grace au graphSearch.
-		twitter: Recuperer les informations d'un compte Twitter.
-		instagram: Recuperer les informations d'un compte Instagram.
+ Name                             Action
+ ----                             ------
+ Personne lookup                  Faire des recherches avec un nom, prenom et (ville).
+ Username lookup                  Faire des recherches avec un pseudonyme.  
+ Adresse lookup                   Faire des recherches avec une adresse.
+ Phone lookup                     Faire des recherches avec un numero de telephone.
+ IP lookup                        Faire des recherches avec une adresse IP.
+ SSID locator                     Faire des recherches avec une adresse MAC/BSSID
+ Email lookup                     Faire des recherches avec une adresse email.
+ Mail tracer                      Faire des recherches avec l'entete d'un mail.
+ Exif data                        Faire des recherches grace au MetaData d'une photo.
+ Google search                    Faire des recherches sur google.
+ Facebook graphSearch             Faire des recherche grace au graphSearch.
+ twitter info                     Recuperer les informations d'un compte Twitter.
+ instagram info                   Recuperer les informations d'un compte Instagram.
 
-		back : Revenir au menu principal.
-		exit / quit  : Pour quitter le logiciel.
-		clear : Efface l'ecran."""
+ Back main menu                   Revenir au menu principal.
+ Exit script                      Pour quitter le logiciel.
+ Clear screen                     Efface l'ecran."""
 
 helpSEtool = """
-		sms : Recevoir des SMS sur des numeros libre. 
-		spam: Spamer une adresse email.
+ Name                             Action
+ ----                             ------
+ SMS                              Recevoir des SMS sur des numeros libre. 
+ Spam email                       Spamer une adresse email.
 
-		back : Revenir au menu principal.
-		exit / quit  : Pour quitter le logiciel.
-		clear : Efface l'ecran."""
+ Back main menu                   Revenir au menu principal.
+ Exit script                      Pour quitter le logiciel.
+ Clear screen                     Efface l'ecran."""
 
+mainOption = """
+ [1] Lookup
+ [2] Social engineering tool
+ [3] Make file
+ [4] Show Database
 
-menuLookup = """
-            ______              
-         .-'      `-.           
-       .'            `.         
-      /    01101       \        
-     ;      10011      ;`       
-     |     01110       |;        -------=+[  _LittleBrother_  ]__
-     ;      1101001    ;|        ......................................
-     '\               / ;        ------------=+[ Author: Lulz3xploit ]__
-      \`.           .' /         ------------=+[ Version: 3.0 ]__
-       `.`-._____.-' .'         
-         / /`_____.-'            [%s] [%s]
-        / / /                   
-       / / /                           [%s]
-      / / /                              
-     / / /
-    / / /
-   / / /   _     _ _   _   _      ____            _   _            
-  / / /   | |   (_) |_| |_| | ___| __ ) _ __ ___ | |_| |__   ___ _ __ 
- / / /    | |   | | __| __| |/ _ \  _ \| '__/ _ \| __| '_ \ / _ \ '__|  
-/ / /     | |___| | |_| |_| |  __/ |_) | | | (_) | |_| | | |  __/ |      
-\/_/      |_____|_|\__|\__|_|\___|____/|_|  \___/ \__|_| |_|\___|_|      
-                                                        
-        Tapez 'help' pour avoir plus d'information.
-""" % (today, times(),testConnexion())
+ [e] Exit script    [h] Help Message    [c] Clear Screen"""
 
-menu = """
-                         __..--.._   
-  .....              .--~  .....  `.    
-.":    "`-..  .    .' ..-'"    :". `     -------=+[  _LittleBrother_  ]__
+text = ['Press F to hack', 'LEAVE ME HERE', 'The security is an illusion.', 'Profiler ctOS v2.0', 'DedSec takeover', 'Fsociety00.dat', 'Evil Corp',
+ 'Hello, friend', 'Hacking is our weapon', 'Hello, World', 'Login the world...', 'Big Brother is watching you.', 'Fuck Society',
+ 'The control is an illusion.', 'install google_crack.exe...', 'you are free ! lol no it was a joke.', 'you are a 1 or a 0 ?', 'Matraque: 1 - Genou: 0', 'Je veux que tu comprenne... Que tu ne sera plus jamais libre..', 'Tu pense être intouchable... Je vais briser tes illusion...',
+ 'je veut que tu sache... que tu n\'es plus anonyme..']
+
+lookupOption = """
+ [1] Personne lookup          [8] Mail tracer
+ [2] Username lookup          [9] Exif data
+ [3] Adresse lookup           [10] Google search
+ [4] Phone lookup             [11] Facebook GraphSearch
+ [5] IP lookup                [12] twitter info
+ [6] SSID locator             [13] instagram info
+ [7] Email lookup
+
+ [b] back main menu    [e] Exit script    [h] Help Message    [c] Clear Screen"""
+
+setoolOption = """
+ [1] SMS
+ [2] Spam email
+
+ [b] back main menu    [e] Exit script    [h] Help Message    [c] Clear Screen 
+"""
+
+def menu():
+
+	menu = """
+                         __..--.._ 
+  .....              .--~  .....  `.
+.":    "`-..  .    .' ..-'"    :". `     -------=+[ %s | %s ]__
 ` `._ ` _.'`"(     `-"'`._ ' _.' '       ......................................
      ~~~      `.          ~~~            ------------=+[ Author: Lulz3xploit ]__
-              .'                         ------------=+[ Version: 2.1 ]__
-             /                                    
-            (                                   [ %s ] [ %s ]
-             ^---'                                
- _     _ _   _   _      ____            _   _           [ %s ]          
-| |   (_) |_| |_| | ___| __ ) _ __ ___ | |_| |__   ___ _ __ 
-| |   | | __| __| |/ _ \  _ \| '__/ _ \| __| '_ \ / _ \ '__|  
-| |___| | |_| |_| |  __/ |_) | | | (_) | |_| | | |  __/ |      
-|_____|_|\__|\__|_|\___|____/|_|  \___/ \__|_| |_|\___|_|      
-                                                        
-        Tapez 'help' pour avoir plus d'information.
-""" % (today, times(),testConnexion())
+              .'                         ------------=+[ Version: %s ]__
+             /
+            (                             %s
+             ^---'                                                                                  
+	""" % (today, times(), str(__version__), random.choice(text))
+	
+	print(lb_header())
+	print(menu)
 
 clear()
-print(menu)
-checkVersion()
+menu()
+
+print(mainOption)
 
 try:
 	while True:
-		# clear()
-		# print(menu)
 		choix = input("\n[#][LittleBrother:~$ ")
-		if choix.lower() == 'help':
-			print(helpMsg)
-		elif choix.lower() == 'lookup':
+	
+		if choix.lower() == 'h':
+			print(helpMain)
+		elif choix.lower() == 'c':
 			clear()
-			print(menuLookup)
+			menu()
+			print(mainOption)
+		elif choix == '4':
+			showDataBase()
+			clear()
+			menu()
+			print(mainOption)
+		elif choix == '3':
+			doxMaker()
+		elif choix.lower() == 'e':
+			sys.exit("\n[I] Bye ! :)")
+		elif choix == '1':
+			clear()
+			menu()
+			print(lookupOption)
 			while True:
 				lookup = input("\n[#][LittleBrother][Lookup:~$ ")
-				if lookup == 'help':
+				if lookup == 'h':
 					print(helpLookup)
-				elif lookup.lower() == 'personne':
+				elif lookup.lower() == '1':
 					searchPersonne()
-				elif lookup.lower() == 'ip':
+				elif lookup.lower() == '5':
 					ipFinder()
-				elif lookup.lower() == 'bssid':
+				elif lookup.lower() == '6':
 					bssidFinder()
-				elif lookup.lower() == 'phone':
+				elif lookup.lower() == '4':
 					searchNumber()
-				elif lookup.lower() == 'email':
+				elif lookup.lower() == '7':
 					SearchEmail4()
-				elif lookup.lower() == 'adresse':
+				elif lookup.lower() == '3':
 					searchAdresse()
-				elif lookup.lower() == 'pseudo':
+				elif lookup.lower() == '2':
 					searchUserName()
-				elif lookup.lower() == 'google':
+				elif lookup.lower() == '10':
 					google()
-				elif lookup.lower() == 'photo':
+				elif lookup.lower() == '9':
 					exifRead()
-				elif lookup.lower() == 'mail':
+				elif lookup.lower() == '8':
 					mailToIP()
-				elif lookup.lower() == "facebook":
+				elif lookup.lower() == "11":
 					facebookStalk()
-				elif lookup.lower() == "twitter":
+				elif lookup.lower() == "12":
 					searchTwitter()
-				elif lookup.lower() == "instagram":
+				elif lookup.lower() == "13":
 					searchInstagram()
-				elif lookup.lower() == "back":
+				elif lookup.lower() == "b":
 					clear()
-					print(menu)
+					menu()
+					print(mainOption)
 					break
-				elif lookup.lower() == "clear":
+				elif lookup.lower() == "c":
 					clear()
-					print(menu)
+					menu()
+					print(lookupOption)
 				elif lookup == '':
 					pass
-				elif lookup.lower() == "exit" or lookup.lower() == "quit":
-					sys.exit("\nBye !")
+				elif lookup.lower() == "e":
+					sys.exit("\n[I] Bye ! :)")
 				else:
 					print("Commande introuvable")
-		elif choix.lower() == "setool":
+		elif choix == '2':
 			clear()
-			print(menu)
+			menu()
+			print(setoolOption)
 			while True:
 				se = input("\n[#][LittleBrother][SETool:~$ ")
-				if se == 'help':
+				if se == 'h':
 					print(helpSEtool)
-				elif se.lower() == "sms":
-					reveiveSms()
-				elif se.lower() == "spam":
+				elif se.lower() == "1":
+					receive_sms()
+				elif se.lower() == "2":
 					emailSpam()
-				elif se.lower() == "back":
+				elif se.lower() == "b":
 					clear()
-					print(menu)
+					menu()
+					print(mainOption)
 					break
-				elif se.lower() == "clear":
+				elif se.lower() == "c":
 					clear()
-					print(menu)
+					menu()
+					print(setoolOption)
 				elif se == '':
 					pass
-				elif se.lower() == "exit" or se.lower() == "quit":
-					sys.exit("\nBye !")
+				elif se.lower() == "e":
+					sys.exit("\n[I] Bye ! :) ")
 				else:
 					print("Commande introuvable")
-		elif choix.lower() == 'db':
-			clear()
-			print(menu)
-			showDataBase()
-		elif choix.lower() == 'make':
-			doxMaker()
-		elif choix == '':
-			pass			
-		elif choix.lower() == "clear":
-			clear()
-			print(menu)
-		elif choix.lower() == "exit" or choix.lower() == 'quit':
-			sys.exit("\nBye !")
 		else:
 			print("Commande introuvable")
+
 except KeyboardInterrupt:
-	sys.exit("\nBye ! :)")
+	sys.exit("\n[I] Bye ! :)")
