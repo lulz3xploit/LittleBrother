@@ -21,9 +21,6 @@ def clear():
 
 def loading():
 
-	libList = []
-
-
 	string = ['S','t', 'a', 'r', 't', ' ',  'l', 'i', 't', 't', 'l', 'e', 'b', 'r', 'o', 't', 'h', 'e', 'r']
 	nb = len(string)
 
@@ -1113,7 +1110,15 @@ def searchPersonne():
 	try:
 # Page Jaune search
 		url = "https://www.pagesjaunes.fr/pagesblanches/recherche?quoiqui={}&ou={}"
-		headers = {'User-agent': 'Chrome/34.0.1847.116'}
+		headers = {
+			'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36',
+    	    'referrer': 'https://google.com',
+        	'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+        	'Accept-Encoding': 'gzip, deflate, br',
+        	'Accept-Language': 'en-US,en;q=0.9',
+        	'Pragma': 'no-cache'
+        }
+        
 		requete = requests.get(url.format(nom, city), headers=headers)
 		searchPJ(requete)
 
