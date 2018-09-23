@@ -1,7 +1,7 @@
 LittleBrother
 =
 
-LittleBrother is an information gathering tool (Doxing) that aims to perform research on a French person. It provides various modules that allow for effective searches.
+LittleBrother is an information gathering tool (OSINT) that aims to perform research on a French person. It provides various modules that allow for effective searches.
 Powered by <a href="https://www.pagesjaunes.com"> pagejaunes</a>, <a href="https://www.receive-sms-online.info">receive-sms-online </a>, <a href = "https://www.mylnikov.org/"> mylnikov</a>, <a href="https://www.infos-numero.com"> infos-numero </a>, <a href="https://extreme-ip-lookup.com"> extreme-ip-lookup</a>, <a href="http://www.smaltra.ovh."> smaltra</a>.
 
 ![](https://image.ibb.co/dDt4Jc/Little_Brother.png)
