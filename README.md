@@ -66,11 +66,18 @@ Features
 	- Ip locator
 	- Bssid locator
 	- Exif read
+	- Google search
 	- Twitter
 	- Instagram
 	- Facebook
+	- LinkedIn employee search (New !)
+	- Hash Bruteforce (New !)
 
  - Autre outils:
  
 	- Hash Bruteforce
 
+- Profiler (New !)
+	- Profiler an profile
+	- Database management
+	- Profile creator
