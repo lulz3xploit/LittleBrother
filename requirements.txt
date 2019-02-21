@@ -1,0 +1,4 @@
+requests
+bs4
+terminaltables
+exifread
