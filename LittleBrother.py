@@ -425,7 +425,7 @@ countryMenu = """
  [2] BE (Belgique)   [5] All (FR, BE, CH, LU)
  [3] CH (Suisse)
 
- [e] back main menu   [c] Clear screen   [h] Help message
+ [b] back main menu   [c] Clear screen   [h] Help message
 """
 
 def menu():
