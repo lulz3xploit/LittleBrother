@@ -1,10 +1,12 @@
 from colorama import init, Fore,  Back,  Style
 from core.instagramSearchTool import instagramSearchTool
 from core.shortCutUrl import shortCutUrl
+import os
 
 warning = "["+Fore.RED+"!"+Fore.RESET+"]"
 question = "["+Fore.YELLOW+"?"+Fore.RESET+"]"
 found = "["+Fore.GREEN+"+"+Fore.RESET+"]"
+wait = "["+Fore.MAGENTA+"*"+Fore.RESET+"]"
 
 def searchInstagram():
 	user = input(" Username: ")
@@ -56,10 +58,16 @@ def searchInstagram():
 			if choix == "" or choix.upper() == "N":
 				break
 			
-			elif choix.upper() == "Y":
-				print(question+" Ou voulez-vous enregistrer les photos ?")
-				path = input(" Path: ")
-				print(wait+" Téléchargement des photos de '%s'" % (user))
+			elif choix.upper() == "O":
+				print("\n"+question+" Ou voulez-vous enregistrer les photos ?")
+				pathDefault = os.getcwd()
+				print(Fore.YELLOW+" Default path: "+pathDefault+Fore.RESET)
+				path = input("\n Path: ")
+				print("\n"+wait+" Téléchargement des photos de '%s'\n" % (user))
+			
+				if not path:
+					path = pathDefault
+			
 				insta.downloadPictures(urlProfil, path)
-				print(found+" Téléchargement fini.")
+				print("\n"+found+" Téléchargement fini.")
 				break

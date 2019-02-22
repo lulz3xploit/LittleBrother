@@ -131,7 +131,7 @@ class instagramSearchTool:
 							
 		self.accounts = accountsList
 
-	def downloadPictures(url, path):
+	def downloadPictures(self, url, path):
 		if not path.endswith("/"):
 			path += "/"
 

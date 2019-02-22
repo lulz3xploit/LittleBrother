@@ -5,7 +5,7 @@ from core.facebookSearchTool import facebookSearchTool
 from core.twitterSearchTool import twitterSearchTool
 from core.Profiler import Profiler
 from terminaltables import SingleTable
-import time
+import time, os
 
 warning = "["+Fore.RED+"!"+Fore.RESET+"]"
 question = "["+Fore.YELLOW+"?"+Fore.RESET+"]"
@@ -260,8 +260,13 @@ Descriptions:
 
 			if choix.upper() == 'O':
 				print("\n"+question+" Ou voulez-vous enregistrer la copie ?")
+				pathDefault = os.getcwd()
+				print(Fore.YELLOW+" Default path: "+pathDefault+Fore.RESET)
 				path = input("\n Path: ")
 
+				if not path:
+					path = pathDefault
+					path += "\\"
 				if path.endswith(".txt"):
 					path = path_txt
 				else:
