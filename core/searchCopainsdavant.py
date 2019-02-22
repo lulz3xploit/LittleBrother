@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
 from terminaltables import SingleTable
-import requests
+import requests, re
 
 def searchCopainsdavant(nom, city):
 	url = "http://copainsdavant.linternaute.com/s/?ty=1&prenom=%s&nom=%s&nomjf=&annee=&anneeDelta=&ville=%s"
