@@ -316,9 +316,9 @@ def lb_header():
 
 helpMain = """
  Name                       Action
- ----                       ------
+ ----                       ------<
  Lookup                     Faire des recherches sur une personne. 
- Social engineering         Utiliser des outils pour du social engineering.
+ Other Tool                 Utiliser des outils autre que pour de la reconnaissance.
  Make file                  Creer un fichier '.txt' pour y ecrire les infos obtenu.
  Show Database              Accedez a la base de donnee.
 
@@ -482,7 +482,7 @@ try:
 				choix = input("\n LittleBrother("+Fore.BLUE + "Profiler" + Fore.RESET + ")$ ")
 
 				if choix.lower() == 'h':
-					print(helpMsg)
+					print(helpProfiler)
 				elif choix.lower() == 'b':
 					clear()
 					menu()
