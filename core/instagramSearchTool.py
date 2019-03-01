@@ -27,35 +27,41 @@ class instagramSearchTool:
 
 		if not private:
 			jsonData2 = re.findall(r"script type=\"application/ld\+json\">\n(.*)", page)
-			jsonDataFound2 = jsonData2[0]
 			
-			values = json.loads(jsonDataFound2)
+			if jsonData2:
+				jsonDataFound2 = jsonData2[0]
+				
+				values = json.loads(jsonDataFound2)
 
-			try:
-				url = values['url']
-			except:
+				try:
+					url = values['url']
+				except:
+					url = None
+
+				try:
+					email = values['email']
+				except:
+					email = None
+
+				try:
+					adresse = values['adresse']['addressLocality']
+				except:
+					adresse = None
+
+				try:
+					phone = values['telephone']
+				except:
+					phone = None
+			else:
 				url = None
-
-			try:
-				email = values['email']
-			except:
 				email = None
-
-			try:
-				adresse = values['adresse']['addressLocality']
-			except:
 				adresse = None
-
-			try:
-				phone = values['telephone']
-			except:
 				phone = None
 		else:
 			url = None
 			email = None
 			adresse = None
 			phone = None
-
 
 		self.id = profilId
 		self.profi_pic_hd = profilPicHd
