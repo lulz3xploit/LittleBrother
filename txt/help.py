@@ -13,24 +13,24 @@ helpMain = """
 helpLookup = """
  Name                             Action
  ----                             ------
- Personne lookup                  Faire des recherches avec un nom, prenom et (ville).
- Username lookup                  Faire des recherches avec un pseudonyme.
- Adresse lookup                   Faire des recherches avec une adresse.
- Phone lookup                     Faire des recherches avec un numero de telephone.
- IP lookup                        Faire des recherches avec une adresse IP.
- SSID locator                     Faire des recherches avec une adresse MAC/BSSID
- Email lookup                     Faire des recherches avec une adresse email.
- Mail tracer                      Faire des recherches avec l'entete d'un mail.
- Employés recherche               Recherche les employés d'une entreprise.
- Google search                    Faire des recherches sur google.
- Facebook graphSearch             Faire des recherche grace au graphSearch.
- twitter info                     Recuperer les informations d'un compte Twitter.
- instagram info                   Recuperer les informations d'un compte Instagram.
+[1]  Personne lookup                  Faire des recherches avec un nom, prenom et (ville).
+[2]  Username lookup                  Faire des recherches avec un pseudonyme.
+[3]  Adresse lookup                   Faire des recherches avec une adresse.
+[4]  Phone lookup                     Faire des recherches avec un numero de telephone.
+[5]  IP lookup                        Faire des recherches avec une adresse IP.
+[6]  SSID locator                     Faire des recherches avec une adresse MAC/BSSID
+[7]  Email lookup                     Faire des recherches avec une adresse email.
+[8]  Mail tracer                      Faire des recherches avec l'entete d'un mail.
+[9]  Employés recherche               Recherche les employés d'une entreprise.
+[10] Google search                    Faire des recherches sur google.
+[11] Facebook graphSearch             Faire des recherche grace au graphSearch.
+[12] twitter info                     Recuperer les informations d'un compte Twitter.
+[13] instagram info                   Recuperer les informations d'un compte Instagram.
 
- Back main menu                   Revenir au menu principal.
- Exit script                      Pour quitter le logiciel.
- Clear screen                     Efface l'ecran."""
-
+[b]  Back main menu                   Revenir au menu principal.
+[e]  Exit script                      Pour quitter le logiciel.
+[c]  Clear screen                     Efface l'ecran.
+[h]  Help Message                     Affichez ce message."""
 helpOtherTool = """
  Name                             Action
  ----                             ------

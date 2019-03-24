@@ -5,6 +5,20 @@ import sys, os, time, random, threading
 from colorama import init, Fore,  Back,  Style
 from lib.menu import checkVersion, clear, menu
 from lib.loading import thread_loading
+from core.searchEmail import SearchEmail
+from core.searchPersonne import searchPersonne
+from core.searchAdresse import searchAdresse
+from core.searchUserName import searchUserName
+from core.ipFinder import ipFinder
+from core.bssidFinder import bssidFinder
+from core.mailToIP import mailToIP
+from core.employee_lookup import employee_lookup
+from core.google import google
+from core.facebookStalk import facebookStalk
+from core.searchTwitter import searchTwitter
+from core.searchInstagram import searchInstagram
+
+from txt.help import helpLookup
 import settings
 
 init()
