@@ -5,6 +5,7 @@ import sys, os, time, random, threading
 from colorama import init, Fore,  Back,  Style
 from lib.menu import checkVersion, clear, menu
 from lib.loading import thread_loading
+//Lookup Menu
 from core.searchEmail import SearchEmail
 from core.searchPersonne import searchPersonne
 from core.searchAdresse import searchAdresse
@@ -17,7 +18,11 @@ from core.google import google
 from core.facebookStalk import facebookStalk
 from core.searchTwitter import searchTwitter
 from core.searchInstagram import searchInstagram
+//Other tool menu
+from core.hashDecrypt import hashdecrypt
 
+
+//Help & settings
 from txt.help import helpLookup
 import settings
 
