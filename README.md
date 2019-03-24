@@ -40,7 +40,7 @@ Python version:
 Python Modules
 =
 - requests
-- bs4 
+- bs4
 - terminaltables
 - colorama
 
@@ -49,11 +49,11 @@ Installation
 =
     git clone https://github.com/Lulz3xploit/LittleBrother
     cd LittleBrother
-    python -m pip install -r requirements.txt
-    python LittleBrother.py
+    python3 -m pip install -r requirements.txt
+    python3 LittleBrother.py
 
 
-Features 
+Features
 =
  - Lookup:
 
@@ -74,7 +74,7 @@ Features
 	- Hash Bruteforce (New !)
 
  - Autre outils:
- 
+
 	- Hash Bruteforce
 
 - Profiler (New !)
