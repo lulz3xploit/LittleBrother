@@ -24,7 +24,7 @@ def init():
     global searchPersonne, SearchEmail, searchInstagram, searchTwitter, searchNumber, searchAdresse, searchUserName, facebookStalk
     global Profiler
 
-    version = '6.0.1'
+    version = '6.0.2'
 
     pathDatabase = os.path.abspath(__file__).split("\\")[:-1]
     pathDatabase = "\\".join(pathDatabase)+"\\Watched"

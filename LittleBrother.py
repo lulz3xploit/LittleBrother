@@ -26,12 +26,10 @@ from core.hashDecrypt import hashdecrypt
 
 #Help & settings
 from txt.help import helpLookup
-from settings import init as settings
-
-codemonpays = ''
+import settings
 
 init()
-settings()
+settings.init()
 
 warning = "["+Fore.RED+"!"+Fore.RESET+"]"
 question = "["+Fore.YELLOW+"?"+Fore.RESET+"]"
@@ -125,7 +123,7 @@ try:
 					clear()
 					menu()
 					print(profilerOption)
-				elif choix.lower() == 'e':
+				elif choix.lower() == 'e' or choix.lower() == 'exit':
 					sys.exit("\n"+information+" Bye ! :)")
 				elif choix.lower() == "1":
 					profile = input(" Profil: ")
@@ -156,7 +154,7 @@ try:
 					else:
 						print("\n"+warning+" Une erreur est survenue. Le profil '%s' n'a pas pu être créé." % (name))
 
-		elif choix.lower() == 'e':
+		elif choix.lower() == 'e' or choix.lower() == 'exit':
 			sys.exit("\n"+information+" Bye ! :)")
 		elif choix == '1':
 			clear()
@@ -167,13 +165,13 @@ try:
 				if lookup == 'h':
 					print(helpLookup)
 				elif lookup.lower() == '1':
-					searchPersonne(codemonpays)
+					searchPersonne(settings.codemonpays)
 				elif lookup.lower() == '2':
 					searchUserName()
 				elif lookup.lower() == '3':
-					searchAdresse(codemonpays)
+					searchAdresse(settings.codemonpays)
 				elif lookup.lower() == '4':
-					searchNumber(codemonpays)
+					searchNumber(settings.codemonpays)
 				elif lookup.lower() == '5':
 					ipFinder()
 				elif lookup.lower() == '6':
@@ -242,36 +240,36 @@ try:
 			while True:
 				newCode = input("\n LittleBrother("+Fore.BLUE+"Country"+Fore.BLUE + "" + Fore.RESET + ")$ ")
 				if newCode == '1':
-					codemonpays = "FR"
-					monpays = "France"
+					settings.codemonpays = "FR"
+					settings.monpays = "France"
 					clear()
 					menu()
 					print(mainOption)
 					break
 				elif newCode == "2":
-					codemonpays = "BE"
-					monpays = "Belgique"
+					settings.codemonpays = "BE"
+					settings.monpays = "Belgique"
 					clear()
 					menu()
 					print(mainOption)
 					break
 				elif newCode == '3':
-					codemonpays = "CH"
-					monpays = 'Suisse'
+					settings.codemonpays = "CH"
+					settings.monpays = 'Suisse'
 					clear()
 					menu()
 					print(mainOption)
 					break
 				elif newCode == '4':
-					codemonpays = "LU"
-					monpays = "Luxembourg"
+					settings.codemonpays = "LU"
+					settings.monpays = "Luxembourg"
 					clear()
 					menu()
 					print(mainOption)
 					break
 				elif newCode == '5':
-					codemonpays = "XX"
-					monpays = "Europe"
+					settings.codemonpays = "XX"
+					settings.monpays = "Europe"
 					clear()
 					menu()
 					print(mainOption)
