@@ -18,6 +18,8 @@ from core.google import google
 from core.facebookStalk import facebookStalk
 from core.searchTwitter import searchTwitter
 from core.searchInstagram import searchInstagram
+from core.profilerFunc import profilerFunc
+from core.searchNumber import searchNumber
 //Other tool menu
 from core.hashDecrypt import hashdecrypt
 
