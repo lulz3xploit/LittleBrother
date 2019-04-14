@@ -5,7 +5,7 @@ import sys, os, time, random, threading
 from colorama import init, Fore,  Back,  Style
 from lib.menu import checkVersion, clear, menu
 from lib.loading import thread_loading
-//Lookup Menu
+#Lookup Menu
 from core.searchEmail import SearchEmail
 from core.searchPersonne import searchPersonne
 from core.searchAdresse import searchAdresse
@@ -20,15 +20,18 @@ from core.searchTwitter import searchTwitter
 from core.searchInstagram import searchInstagram
 from core.profilerFunc import profilerFunc
 from core.searchNumber import searchNumber
-//Other tool menu
+#Other tool menu
 from core.hashDecrypt import hashdecrypt
 
 
-//Help & settings
+#Help & settings
 from txt.help import helpLookup
-import settings
+from settings import init as settings
+
+codemonpays = ''
 
 init()
+settings()
 
 warning = "["+Fore.RED+"!"+Fore.RESET+"]"
 question = "["+Fore.YELLOW+"?"+Fore.RESET+"]"
@@ -165,25 +168,24 @@ try:
 					print(helpLookup)
 				elif lookup.lower() == '1':
 					searchPersonne(codemonpays)
+				elif lookup.lower() == '2':
+					searchUserName()
+				elif lookup.lower() == '3':
+					searchAdresse(codemonpays)
+				elif lookup.lower() == '4':
+					searchNumber(codemonpays)
 				elif lookup.lower() == '5':
 					ipFinder()
 				elif lookup.lower() == '6':
 					bssidFinder()
-				elif lookup.lower() == '4':
-					searchNumber(codemonpays)
 				elif lookup.lower() == '7':
 					SearchEmail()
-				#  ...
-				elif lookup.lower() == '3':
-					searchAdresse(codemonpays)
-				elif lookup.lower() == '2':
-					searchUserName()
-				elif lookup.lower() == '10':
-					google()
-				elif lookup.lower() == '9':
-					employee_lookup()
 				elif lookup.lower() == '8':
 					mailToIP()
+				elif lookup.lower() == '9':
+					employee_lookup()
+				elif lookup.lower() == '10':
+					google()
 				elif lookup.lower() == "11":
 					facebookStalk()
 				elif lookup.lower() == "12":
