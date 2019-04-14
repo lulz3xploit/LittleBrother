@@ -4,4 +4,11 @@ text = ['Press F to hack', 'LEAVE ME HERE', 'The security is an illusion.', 'Pro
  'je veux que tu sache... que tu n\'es plus anonyme...', 'Snapchat: T-Bone sent you a new message.', 'LulzSec <3 <3', '<3 Kraken Security OS is bae <3', 'DedSec is now in LinkedIn !',
  'FRANCE World champion 2018 !!', '~~(8:> is Defalt ~~(8:>', 'Facebook: Neo in a relationship with Elliot Alderson.', 'Just.. fuck the society.', 'locating 127.0.0.1 ... No match found',
  '101100100101100 01100110010110011001', '101100 0110011001', 'c2V5cHRvbyBteSBsb3Zl', '1 item in your web hisotry: \'Fkk cuckold how to make your wife a hotwife zootube\'', '49 20 4c 4f 56 45 20 55', 'NB2HI4DTHIXS653XO4XHS33VOR2WEZJOMNXW2L3XMF2GG2B7OY6VUS3OKVZGQYSLJQ3GO===', 'Regarde derrière toi...',
- 'dW4gZCdldXggdHJvdWUgw6AgcXUnYSB0J3JlIHNlaW4gcXVlIHNpIGNlIGNldHRl', 'Send me nudes: Harry.Truman@nsa.gov', "Access point 'AP-Zone51' was found nearby."]
+ 'dW4gZCdldXggdHJvdWUgw6AgcXUnYSB0J3JlIHNlaW4gcXVlIHNpIGNlIGNldHRl', 'Send me nudes: Harry.Truman@nsa.gov', "Access point 'AP-Zone51' was found nearby.","┌∩┐(◣_◢)┌∩┐", "Ducky Epstein, occupies the toilet","G1gg1L3s /* pee pee */","Don't QQ if U can't find me",
+ "DedSec? More like", "Mark IV style muthaf*cker!","U R getting WARMER","(+) New update is vailable...",
+ "BadBoy17? Bad, BOY, 17? Really?","Itz all 4 d GIGGLES!","G1gg1L3s... 1L... IL... Get it?","How U finding these? à² _à²",
+ "U must werk out. >_<","Azarath is an legend/god","Irhel is real.","<3 Seyptoo <3","Digidix come back plz !",
+ "Soldat Abdel carrote a perdu sa chaussure. Terminé","Missile Kinder #1 Found !","cochon maladeeeeeeeee !",
+ "Pornhub and chill","Alpha: Beta Omega Omega Beta Alpha... IZI","I am the ONE.","o_O  O.O  O.o  O_ﾃｳ","~~(8:> will U be my BFF? 4 realz!",
+ "'hasta la victoria'","'Consume Be Silent'","WHAT PRIVACY?","BADGER BADGER BADGER BADGER","DAT ASS","U MAD BRO?",
+ "HERP DERP HERP DERP","I LIKE TURTLES","(<3 <3)","(* *)","(X X)","(^ ^)","(@ @)","(! !)","(~ ~)"]
