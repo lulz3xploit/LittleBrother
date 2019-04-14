@@ -81,3 +81,7 @@ Features
 	- Profiler an profile
 	- Database management
 	- Profile creator
+
+Discord
+=
+[Serveur Discord](https://discord.gg/r8GvsYM)
