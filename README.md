@@ -9,6 +9,11 @@ Disclaimer
 =
 LittleBrother a été développé pour faire des recherches sur soi-même et pour voir les informations privées et sensibles que l'on peut laisser derrière sur les réseaux sociaux. Je n'encourage en aucun cas l'utilisation de cet outil sur une autre personne que soi-même ou d'utiliser cet outil à mauvais escient.
 
+Discord
+=
+Si vous avez des questions, des idées, des problèmes concernant LittleBrother ou si vous voulez juste suivre l'avancement de se projet.  
+- [Serveur Discord](https://discord.gg/r8GvsYM)
+
 Nouveautées version 6.0
 =
 - En plus (+)
@@ -82,6 +87,6 @@ Features
 	- Database management
 	- Profile creator
 
-Discord
+Contributors
 =
-[Serveur Discord](https://discord.gg/r8GvsYM)
+❤️ [H3L](https://github.com/lrhel) ❤
