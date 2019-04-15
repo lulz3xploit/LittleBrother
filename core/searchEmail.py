@@ -22,9 +22,9 @@ def SearchEmail():
 		]
 
 		for lk in leak:
-			name = lk['name']
-			domain = lk['domain']
-			date = lk['date']
+			name = lk['Title']
+			domain = lk['Domain']
+			date = lk['Date']
 
 			tuples = (name, domain, date)
 			TABLE_DATA.append(tuples)
@@ -53,7 +53,7 @@ def SearchEmail():
 			if not "googleusercontent" in url:
 				if not "/settings/ads" in url:
 					if not "webcache.googleusercontent.com/" in url:
-						if not "/policies/faq" in url:	
+						if not "/policies/faq" in url:
 							try:
 								# print("(%s) link scanned. " % (str(x)))
 								texte = requests.get(url).text
