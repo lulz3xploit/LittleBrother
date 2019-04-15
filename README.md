@@ -11,7 +11,7 @@ LittleBrother a été développé pour faire des recherches sur soi-même et pou
 
 Discord
 =
-Si vous avez des questions, des idées, des problèmes concernant LittleBrother ou si vous voulez juste suivre l'avancement de se projet.  
+Si vous avez des questions, des idées, des problèmes concernant LittleBrother ou si vous voulez juste suivre l'avancement de ce projet.  
 - [Serveur Discord](https://discord.gg/r8GvsYM)
 
 Nouveautées version 6.0
