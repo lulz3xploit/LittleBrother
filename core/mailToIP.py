@@ -19,7 +19,7 @@ def mailToIP():
 		response = requests.get(url).content.decode('utf-8')
 		values = json.loads(response)
 
-		return(values['country']+', '+values['region']+', '+ values['city'])
+		return(", ".join([values[v] for v in ("country", "region", "city")]))
 
 	def get_domain(ip):
 		s = socket.gethostbyaddr(ip)
