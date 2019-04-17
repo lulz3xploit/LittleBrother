@@ -72,7 +72,7 @@ class instagramSearchTool:
 						phone = None
 
 		self.id = profilId
-		self.profile_pic_hd = profilPicHd
+		self.profi_pic_hd = profilPicHd
 		self.biography = bio
 		self.username = user
 		self.name = name
