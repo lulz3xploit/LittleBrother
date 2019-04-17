@@ -4,67 +4,75 @@ class instagramSearchTool:
 
 	def getInfo(self, username):
 		if username.startswith("http"):
-			url = username
+			urlSite = username
 		else:
-			url = "https://instagram.com/"+username
+			urlSite = "https://instagram.com/"+username
 
-		page = requests.get(url).content.decode('utf-8')
+		profilId = "None"
+		profilPicHd = None
+		bio = None
+		user = None
+		name = None
+		private = None
+		follower = None
+		friend = None
+		media = None
+		urlAccount = None
 
-		jsonData = re.findall(r"<script type=\"text/javascript\">(.*);</script>", page)
-		jsonDataFound = jsonData[0].replace("window._sharedData = ", "")
-		values = json.loads(jsonDataFound)
-		
-		urlAccount = url
-		profilId = values['entry_data']['ProfilePage'][0]['graphql']['user']['id']
-		bio = values['entry_data']['ProfilePage'][0]['graphql']['user']['biography']
-		user = values['entry_data']['ProfilePage'][0]['graphql']['user']['username']
-		name = values['entry_data']['ProfilePage'][0]['graphql']['user']['full_name']
-		private = values['entry_data']['ProfilePage'][0]['graphql']['user']['is_private']
-		follower = values['entry_data']['ProfilePage'][0]['graphql']['user']['edge_followed_by']['count']
-		friend = values['entry_data']['ProfilePage'][0]['graphql']['user']['edge_follow']['count']
-		media = values['entry_data']['ProfilePage'][0]['graphql']['user']['edge_owner_to_timeline_media']['count']
-		profilPicHd = values['entry_data']['ProfilePage'][0]['graphql']['user']['profile_pic_url_hd']
+		email = None
+		url = None
+		adresse = None
+		phone = None
 
-		if not private:
-			jsonData2 = re.findall(r"script type=\"application/ld\+json\">\n(.*)", page)
+		req = requests.get(urlSite)
+		page = req.content.decode('utf-8')
+
+		if req.status_code == 200:
+			jsonData = re.findall(r"<script type=\"text/javascript\">(.*);</script>", page)
+			jsonDataFound = jsonData[0].replace("window._sharedData = ", "")
+			values = json.loads(jsonDataFound)
 			
-			if jsonData2:
-				jsonDataFound2 = jsonData2[0]
+			urlAccount = url
+			profilId = values['entry_data']['ProfilePage'][0]['graphql']['user']['id']
+			bio = values['entry_data']['ProfilePage'][0]['graphql']['user']['biography']
+			user = values['entry_data']['ProfilePage'][0]['graphql']['user']['username']
+			name = values['entry_data']['ProfilePage'][0]['graphql']['user']['full_name']
+			private = values['entry_data']['ProfilePage'][0]['graphql']['user']['is_private']
+			follower = values['entry_data']['ProfilePage'][0]['graphql']['user']['edge_followed_by']['count']
+			friend = values['entry_data']['ProfilePage'][0]['graphql']['user']['edge_follow']['count']
+			media = values['entry_data']['ProfilePage'][0]['graphql']['user']['edge_owner_to_timeline_media']['count']
+			profilPicHd = values['entry_data']['ProfilePage'][0]['graphql']['user']['profile_pic_url_hd']
+
+			if not private:
+				jsonData2 = re.findall(r"script type=\"application/ld\+json\">\n(.*)", page)
 				
-				values = json.loads(jsonDataFound2)
+				if jsonData2:
+					jsonDataFound2 = jsonData2[0]
+					
+					values = json.loads(jsonDataFound2)
 
-				try:
-					url = values['url']
-				except:
-					url = None
+					try:
+						url = values['url']
+					except:
+						url = None
 
-				try:
-					email = values['email']
-				except:
-					email = None
+					try:
+						email = values['email']
+					except:
+						email = None
 
-				try:
-					adresse = values['adresse']['addressLocality']
-				except:
-					adresse = None
+					try:
+						adresse = values['adresse']['addressLocality']
+					except:
+						adresse = None
 
-				try:
-					phone = values['telephone']
-				except:
-					phone = None
-			else:
-				url = None
-				email = None
-				adresse = None
-				phone = None
-		else:
-			url = None
-			email = None
-			adresse = None
-			phone = None
+					try:
+						phone = values['telephone']
+					except:
+						phone = None
 
 		self.id = profilId
-		self.profi_pic_hd = profilPicHd
+		self.profile_pic_hd = profilPicHd
 		self.biography = bio
 		self.username = user
 		self.name = name
