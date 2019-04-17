@@ -126,10 +126,12 @@ try:
 				elif choix.lower() == 'e' or choix.lower() == 'exit':
 					sys.exit("\n"+information+" Bye ! :)")
 				elif choix.lower() == "1":
-					profile = input(" Profil: ")
-					data = pr.searchDatabase(profile, database=database)
-					profilerFunc(data, path=settings.pathDatabase)
-
+					if pr.count >= 1:
+						profile = input(" Profil: ")
+						data = pr.searchDatabase(profile, database=database)
+						profilerFunc(data, path=settings.pathDatabase)
+					else:
+						print(warning+" Aucun profil trouvé. Veuillez en créer un.")
 				elif choix.lower() == "2":
 					pr.showAllProfiles(database=database)
 
