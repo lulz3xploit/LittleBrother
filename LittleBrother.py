@@ -127,7 +127,10 @@ try:
 					sys.exit("\n"+information+" Bye ! :)")
 				elif choix.lower() == "1":
 					if pr.count >= 1:
-						profile = input(" Profil: ")
+						while True: 
+							profile = input(" Profil: ")
+							if profile != '':
+								break
 						data = pr.searchDatabase(profile, database=database)
 						profilerFunc(data, path=settings.pathDatabase)
 					else:
@@ -137,15 +140,27 @@ try:
 
 				elif choix.lower() == '3':
 					print("\n"+Fore.YELLOW+"(Format: Prenom Nom)"+Fore.RESET)
-					name = input(" Nom du Profil: ")
+					while True: 
+						name = input(" Nom du Profil: ")
+						if name != '':
+							break
 					name = name.split(" ")
 					name = [i.capitalize() for i in name]
 					name = " ".join(name)
-					twitter = input(" Twitter: ")
+					while True:
+						twitter = input(" Twitter: ")
+						if twitter != '':
+							break
 					# print(found+" %s" % (twitter))
-					instagram = input(" Instagram: ")
+					while True:
+						instagram = input(" Instagram: ")
+						if instagram != '':
+							break
 					# print(found+" %s" % (instagram))
-					facebook = input(" Facebook: ")
+					while True:
+						facebook = input(" Facebook: ")
+						if facebook != '':
+							break
 					# print(found+" %s" % (facebook))
 
 					info = {"URL": {"Twitter": twitter, "Facebook":facebook, "Instagram": instagram}}
