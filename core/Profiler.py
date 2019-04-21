@@ -196,9 +196,10 @@ class Profiler:
 
 		def reverseName(name):
 			nameSplit = name.split(" ")
-			nameReversed = "%s %s" % (nameSplit[1], nameSplit[0])
-			return(nameReversed.capitalize())
-
+			if nameSplit == 2:
+				nameReversed = "%s %s" % (nameSplit[1], nameSplit[0])
+				return(nameReversed.capitalize())
+			return name.capitalize()
 		# def searchProfiles(profile, database=''):
 		name = profile
 		nameType = ''
