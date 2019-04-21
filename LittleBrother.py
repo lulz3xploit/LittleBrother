@@ -112,6 +112,8 @@ try:
 
 				choix = input("\n LittleBrother("+Fore.BLUE + "Profiler" + Fore.RESET + ")$ ")
 
+				info = {"URL": {}}
+				
 				if choix.lower() == 'h':
 					print(helpProfiler)
 				elif choix.lower() == 'b':
@@ -148,22 +150,34 @@ try:
 					name = [i.capitalize() for i in name]
 					name = " ".join(name)
 					while True:
-						twitter = input(" Twitter: ")
-						if twitter != '':
+						print(question+" Voulez vous inscrire un compte Twitter pour se profile ?")
+						choixPr = input(" [O/n]: " )
+						if choixPr.upper() == 'N':
+							break
+						else:
+							twitter = input("\n Twitter: ")
+							info['URL']['Twitter'] = twitter
 							break
 					# print(found+" %s" % (twitter))
 					while True:
-						instagram = input(" Instagram: ")
-						if instagram != '':
+						print(question+" Voulez vous inscrire un compte Instagram pour se profile ?")
+						choixPr = input(" [O/n]: " )
+						if choixPr.upper() == 'N':
 							break
-					# print(found+" %s" % (instagram))
+						else:
+							instagram = input("\n Instagram: ")
+							info['URL']['Instagram'] = instagram
+							break
 					while True:
-						facebook = input(" Facebook: ")
-						if facebook != '':
+						print(question+" Voulez vous inscrire un compte Facebook pour se profile ?")
+						choixPr = input(" [O/n]: " )
+						if choixPr.upper() == 'N':
 							break
-					# print(found+" %s" % (facebook))
+						else:
+							facebook = input("\n Facebook: ")
+							info['URL']['Facebook'] = facebook
+							break
 
-					info = {"URL": {"Twitter": twitter, "Facebook":facebook, "Instagram": instagram}}
 					create = pr.writeProfile(fileName=name, path=settings.pathDatabase, info=info)
 
 					if create:
