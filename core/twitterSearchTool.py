@@ -24,41 +24,60 @@ class twitterSearchTool():
 
 	def getInfoProfile(self, username):
 		if username.startswith('http'):
-			url = username
+			urlSite = username
 		else:
-			url = "https://twitter.com/"+username
+			urlSite = "https://twitter.com/"+username
 
-		req = requests.get(url)
-		page = req.content.decode('utf-8')
-		page0 = req.text
+		profilId = None
+		name = None
+		username = None
+		location = None
+		url = None
+		description = None
+		protected = None
+		followers = None
+		friends = None
+		create = None
+		geo = None
+		verified = None
+		status = None
+		langue = None
+		urlAccount = None
 
-		jsonData = re.findall(r"<input type=\"hidden\" id=\"init-data\" class=\"json-data\" value=\"(.*)\">", page)
-		data =  jsonData[0].replace("&quot;", "\"")
+		req = requests.get(urlSite)
 
-		values = json.loads(data)
+		if req.status_code == 200:
 
-		urlAccount = url
-		birthDate = re.findall(r"ProfileHeaderCard-birthdateText u-dir\" dir=\"ltr\"><span class=\"js-tooltip\" title=\"Publique\">(.*)", page0)
-		profilId = values['profile_user']['id_str']
-		name = values['profile_user']['name']
-		username = values['profile_user']['screen_name']
-		location = values['profile_user']['location']
-		url = values['profile_user']['url']
-		description = values['profile_user']['description']
-		protected = values['profile_user']['protected']
-		followers = values['profile_user']['followers_count']
-		friends = values['profile_user']['friends_count']
-		favoris = values['profile_user']['favourites_count']
-		create = values['profile_user']['created_at']
-		geo = values['profile_user']['geo_enabled']
-		verified = values['profile_user']['verified']
-		status = values['profile_user']['statuses_count']
-		langue = values['profile_user']['lang']
+			page = req.content.decode('utf-8')
+			page0 = req.text
 
-		if not birthDate:
-			self.birth = "None"
-		else:
-			self.birth = birthDate[0].strip()
+			jsonData = re.findall(r"<input type=\"hidden\" id=\"init-data\" class=\"json-data\" value=\"(.*)\">", page)
+			data =  jsonData[0].replace("&quot;", "\"")
+
+			values = json.loads(data)
+
+			urlAccount = url
+			birthDate = re.findall(r"ProfileHeaderCard-birthdateText u-dir\" dir=\"ltr\"><span class=\"js-tooltip\" title=\"Publique\">(.*)", page0)
+			profilId = values['profile_user']['id_str']
+			name = values['profile_user']['name']
+			username = values['profile_user']['screen_name']
+			location = values['profile_user']['location']
+			url = values['profile_user']['url']
+			description = values['profile_user']['description']
+			protected = values['profile_user']['protected']
+			followers = values['profile_user']['followers_count']
+			friends = values['profile_user']['friends_count']
+			favoris = values['profile_user']['favourites_count']
+			create = values['profile_user']['created_at']
+			geo = values['profile_user']['geo_enabled']
+			verified = values['profile_user']['verified']
+			status = values['profile_user']['statuses_count']
+			langue = values['profile_user']['lang']
+
+			if not birthDate:
+				self.birth = "None"
+			else:
+				self.birth = birthDate[0].strip()
 
 		self.id = profilId
 		self.name = name
