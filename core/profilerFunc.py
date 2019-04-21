@@ -16,6 +16,28 @@ def profilerFunc(profile='', path=''):
 	from datetime import date
 	today = date.today()
 
+	today = None
+	profileID = None
+	profileName = None 
+	phones = None 
+	emails = None 
+	instagramLocation = None 
+	twitterLocation = None
+	facebookLocation = None
+	facebookWork = None
+	facebookUsername = None 
+	twitterUsername = None
+	instagramUsername = None
+	facebookID = None 
+	facebookUrl = None 
+	twitterID = None 
+	twitterUrlAccount = None
+	instagramID = None
+	InstagramUrlAccount = None
+	placeVisited = None
+	twitterBio = None 
+	instagramBio = None
+	
 	list_biographi = []
 	list_placeVisited = []
 	list_emails = []
@@ -36,47 +58,59 @@ def profilerFunc(profile='', path=''):
 		if dataProfile:
 			for data in dataProfile:
 				if data.upper() == 'URL':
-					url_twitter = dataProfile[data]['Twitter']
-					url_instagram = dataProfile[data]['Instagram']
-					url_facebook = dataProfile[data]['Facebook']
-
+					try:
+						url_twitter = dataProfile[data]['Twitter']
+					except:
+						url_twitter = None
+					
+					try:
+						url_instagram = dataProfile[data]['Instagram']
+					except:
+						url_instagram = None
+					
+					try:
+						url_facebook = dataProfile[data]['Facebook']
+					except:
+						url_facebook = None
+						
 		name_txt = file.replace(".prfl", ".txt")
 		path_txt = path+'\\'+name_txt
 		
-		twitterInfoDic = {"Twitter": {}}
-		twittool = twitterSearchTool()
-		twittool.getInfoProfile(url_twitter)
-		twitterID, twitterInfoDic['Twitter']['id'] = twittool.id, twittool.id 
-		twitterName, twitterInfoDic['Twitter']['name'] = twittool.name, twittool.name
-		twitterUsername, twitterInfoDic['Twitter']['username'] = twittool.username, twittool.username
-		twitterLocation, twitterInfoDic['Twitter']['location'] = twittool.location, twittool.location
-		twitterUrlFound, twitterInfoDic['Twitter']['urlFound'] = twittool.url, twittool.url
-		twitterBio, twitterInfoDic['Twitter']['description'] = twittool.description, twittool.description
-		twitterUrlAccount, twitterInfoDic['Twitter']['urlAccount'] = url_twitter, url_twitter
-
-		facebookInfoDic = {"Facebook": {}}
-		fbtool = facebookSearchTool()
-		fbtool.getInfoProfile(url_facebook)
-		facebookID, facebookInfoDic['Facebook']['id'] = fbtool.facebookId, fbtool.facebookId
-		faecbookName, facebookInfoDic['Facebook']['name'] = fbtool.name, fbtool.name
-		facebookLocation, facebookInfoDic['Facebook']['location'] = fbtool.address, fbtool.address
-		facebookWork, facebookInfoDic['Facebook']['job'] = fbtool.job, fbtool.job
-		facebookUrl, facebookInfoDic['Facebook']['urlAccount'] = url_facebook, url_facebook
-		facebookUsername, facebookInfoDic['Facebook']['username'] = fbtool.username, fbtool.username
-		facebookAffiliation, facebookInfoDic['Facebook']['affiliations'] = fbtool.affiliations, fbtool.affiliations
-
-		instagramInfoDic = {"Instagram": {}}
-		instatool = instagramSearchTool()
-		instatool.getInfo(url_instagram)
-		instagramID, instagramInfoDic['Instagram']['id'] = instatool.id, instatool.id
-		instagramBio, instagramInfoDic['Instagram']['description'] = instatool.biography, instatool.biography
-		instagramUsername, instagramInfoDic['Instagram']['username'] = instatool.username, instatool.username
-		instagramName, instagramInfoDic['Instagram']['name'] = instatool.name, instatool.name
-		instagramEmail, instagramInfoDic['Instagram']['email'] = instatool.email, instatool.email
-		instagramPhone, instagramInfoDic['Instagram']['phone'] = instatool.phone, instatool.phone
-		instagramUrlFound, instagramInfoDic['Instagram']['urlFound'] = url_instagram, url_instagram
-		instagramLocation, instagramInfoDic['Instagram']['location'] = instatool.adresse, instatool.adresse
-		InstagramUrlAccount, instagramInfoDic['Instagram']['urlAccount'] = instatool.urlAccount, instatool.urlAccount
+		if url_twitter:
+			twitterInfoDic = {"Twitter": {}}
+			twittool = twitterSearchTool()
+			twittool.getInfoProfile(url_twitter)
+			twitterID, twitterInfoDic['Twitter']['id'] = twittool.id, twittool.id 
+			twitterName, twitterInfoDic['Twitter']['name'] = twittool.name, twittool.name
+			twitterUsername, twitterInfoDic['Twitter']['username'] = twittool.username, twittool.username
+			twitterLocation, twitterInfoDic['Twitter']['location'] = twittool.location, twittool.location
+			twitterUrlFound, twitterInfoDic['Twitter']['urlFound'] = twittool.url, twittool.url
+			twitterBio, twitterInfoDic['Twitter']['description'] = twittool.description, twittool.description
+			twitterUrlAccount, twitterInfoDic['Twitter']['urlAccount'] = url_twitter, url_twitter
+		if url_facebook:
+			facebookInfoDic = {"Facebook": {}}
+			fbtool = facebookSearchTool()
+			fbtool.getInfoProfile(url_facebook)
+			facebookID, facebookInfoDic['Facebook']['id'] = fbtool.facebookId, fbtool.facebookId
+			faecbookName, facebookInfoDic['Facebook']['name'] = fbtool.name, fbtool.name
+			facebookLocation, facebookInfoDic['Facebook']['location'] = fbtool.address, fbtool.address
+			facebookWork, facebookInfoDic['Facebook']['job'] = fbtool.job, fbtool.job
+			facebookUrl, facebookInfoDic['Facebook']['urlAccount'] = url_facebook, url_facebook
+			facebookUsername, facebookInfoDic['Facebook']['username'] = fbtool.username, fbtool.username
+			facebookAffiliation, facebookInfoDic['Facebook']['affiliations'] = fbtool.affiliations, fbtool.affiliations
+		if url_instagram:
+			instagramInfoDic = {"Instagram": {}}
+			instatool = instagramSearchTool()
+			instatool.getInfo(url_instagram)
+			instagramID, instagramInfoDic['Instagram']['id'] = instatool.id, instatool.id
+			instagramBio, instagramInfoDic['Instagram']['description'] = instatool.biography, instatool.biography
+			instagramUsername, instagramInfoDic['Instagram']['username'] = instatool.username, instatool.username
+			instagramName, instagramInfoDic['Instagram']['name'] = instatool.name, instatool.name
+			instagramEmail, instagramInfoDic['Instagram']['email'] = instatool.email, instatool.email
+			instagramPhone, instagramInfoDic['Instagram']['phone'] = instatool.phone, instatool.phone
+			instagramUrlFound, instagramInfoDic['Instagram']['urlFound'] = url_instagram, url_instagram
+			instagramLocation, instagramInfoDic['Instagram']['location'] = instatool.adresse, instatool.adresse
+			InstagramUrlAccount, instagramInfoDic['Instagram']['urlAccount'] = instatool.urlAccount, instatool.urlAccount
 
 		for data in dataProfile:
 			if data.upper() == 'TWITTER':
@@ -121,166 +155,175 @@ def profilerFunc(profile='', path=''):
 					dataProfile[data]['description'] = instagramBio
 					list_news.append(instagramBio)
 
-
-		dataProfile.update(twitterInfoDic)
-		dataProfile.update(facebookInfoDic)
-		dataProfile.update(instagramInfoDic)
-		pr.writeProfile(file, path, dataProfile)
-
-		if instagramEmail:
-			list_emails.append(instagramEmail)
+		if url_twitter:
+			dataProfile.update(twitterInfoDic)
+		if url_facebook:
+			dataProfile.update(facebookInfoDic)
+		if url_instagram:
+			dataProfile.update(instagramInfoDic)
 		
-		placeVisited = "; ".join(list_placeVisited)
+		if url_twitter or url_facebook or url_instagram:
+			pr.writeProfile(file, path, dataProfile)
 
-		for bio in list_biographi:
-			regex = RegexTool(bio)
-			emails = regex.Email().email
-			phones = regex.Telephone().telephone
-			urls = regex.Url().url
-
-			for email in emails:
-				list_emails.append(email)
-			for phone in phone:
-				list_phone.append(phone)
-			for url in urls:
-				list_urls.append(urls)
-
-		if list_emails:
-			emails = ", ".join(list_emails)
-		else:
-			emails = ''
+			if instagramEmail:
+				list_emails.append(instagramEmail)
 			
-		if list_phones:
-			phones = ", ".join(list_phones)
-		else:
-			phones = ''
+			placeVisited = "; ".join(list_placeVisited)
 
-		if list_urls:
-			urls = ", ".join(list_urls)
-		else:
-			urls = ''
+			for bio in list_biographi:
+				regex = RegexTool(bio)
+				emails = regex.Email().email
+				phones = regex.Telephone().telephone
+				urls = regex.Url().url
 
-		global_info = """
-Date: %s
+				for email in emails:
+					list_emails.append(email)
+				for phone in phone:
+					list_phone.append(phone)
+				for url in urls:
+					list_urls.append(urls)
 
-Profil ID : %s
-Prénom, Nom: %s
-
-Téléphone: %s
-Emails: %s
-Localisation: %s ; %s ; %s
-Profession: %s
-Pseudos: %s ; %s ; %s
-
-Facebook  (%s) - %s
-Twitter   (%s) - %s
-Instagram (%s) - %s
-
-Endroit visité: %s
-
-Descriptions: 
-%s	
-
-%s
-		""" % (
-				today, profileID, profileName, phones, emails, 
-				instagramLocation, twitterLocation, facebookLocation,
-				facebookWork,
-				facebookUsername, twitterUsername, instagramUsername,
-				facebookID, facebookUrl, twitterID, twitterUrlAccount, instagramID, InstagramUrlAccount,
-				placeVisited,
-				twitterBio, instagramBio
-				)
-
-		w = watcher()
-		w.instagramWatcher(url_instagram)
-		w.twitterWatcher(url_twitter)
-
-		lists = [w.medias, w.tweet]
-		data = pr.timeSort(lists, reverse=True) # True: Ordre Decroissant, False: Ordre croissant (defaut : False)
-
-		TABLE_DATA = [
-			('Date', 'Domain', 'Publication', 'Localisation'),
-		]
-
-		for d in data:
-			date = time.ctime(d)
-			domain = data[d]['domain']
-			
-			if domain == "Twitter":
-				tweet = data[d]['tweet'].replace("https://twitter.com", '')
-				tuples = (date, domain, tweet, 'None')
-				TABLE_DATA.append(tuples)
-			
+			if list_emails:
+				emails = ", ".join(list_emails)
 			else:
-				publication = data[d]['urlMedia']
-				publicationShort = shortCutUrl(publication)
-				typePublication = data[d]['type']
-				localisation = data[d]['location']
+				emails = ''
 				
-				if localisation:
-					list_placeVisited.append(localisation)
-				
-				tuples = (date, domain, publicationShort, localisation)
-				TABLE_DATA.append(tuples)
+			if list_phones:
+				phones = ", ".join(list_phones)
+			else:
+				phones = ''
 
-		tableLastPost = SingleTable(TABLE_DATA, " Last post ")
+			if list_urls:
+				urls = ", ".join(list_urls)
+			else:
+				urls = ''
 
-		print(tableLastPost.table)
-		print("-------------")
-		print("\n"+global_info)
+			global_info = """
+	Date: %s
 
-		if len(list_news) > 0:
-			newsItems = "; ".join(list_news)
-			print("Nouveautés:\n"+newsItems)
-		
-		print("-------------")
+	Profil ID : %s
+	Prénom, Nom: %s
 
-		print(question+" Voulez-vous exporter les données récupérées dans '%s' ? " % (name_txt))
+	Téléphone: %s
+	Emails: %s
+	Localisation: %s ; %s ; %s
+	Profession: %s
+	Pseudos: %s ; %s ; %s
 
-		while True:
-			choix = input("\n [O/n]: ")
+	Facebook  (%s) - %s
+	Twitter   (%s) - %s
+	Instagram (%s) - %s
 
-			if choix == '' or choix.upper() == 'O':
-				f = pr.exportText(name_txt, path, global_info)
-				if f:
-					print("\n"+found+" Données exporté avec succès !")
-					print(" %s" % (path_txt))
-				else:
-					print("\n"+warning+" Une erreur est survenue, les données n'ont pas pu être exporté !")
-				break
+	Endroit visité: %s
 
-			elif choix.upper() == 'N':
-				break
+	Descriptions: 
+	%s	
 
-		print("\n"+question+" Voulez-vous créer une copie de '%s' ? " % (name_txt))
-		
-		while True:
-			choix = input("\n [o/N]: ")
+	%s
+			""" % (
+					today, profileID, profileName, phones, emails, 
+					instagramLocation, twitterLocation, facebookLocation,
+					facebookWork,
+					facebookUsername, twitterUsername, instagramUsername,
+					facebookID, facebookUrl, twitterID, twitterUrlAccount, instagramID, InstagramUrlAccount,
+					placeVisited,
+					twitterBio, instagramBio
+					)
 
-			if choix.upper() == 'O':
-				print("\n"+question+" Ou voulez-vous enregistrer la copie ?")
-				pathDefault = os.getcwd()
-				print(Fore.YELLOW+" Default path: "+pathDefault+Fore.RESET)
-				path = input("\n Path: ")
+			lists = []
+			w = watcher()
+			if url_instagram:
+				w.instagramWatcher(url_instagram)
+				lists.append(w.medias)
+			if url_twitter:
+				w.twitterWatcher(url_twitter)
+				lists.append(w.tweet)
 
-				if not path:
-					path = pathDefault
-					path += "\\"
-				if path.endswith(".txt"):
-					path = path_txt
-				else:
-					path = path+name_txt
+			if lists:
+				data = pr.timeSort(lists, reverse=True) # True: Ordre Decroissant, False: Ordre croissant (defaut : False)
 
-				with open(path, 'w', encoding="utf-8") as f:
-					f.write(global_info)
-					f.close()
+				TABLE_DATA = [
+					('Date', 'Domain', 'Publication', 'Localisation'),
+				]
 
-				print("\n"+found+" '%s' a été copié avec succès !" % (name_txt))
-				break
+				for d in data:
+					date = time.ctime(d)
+					domain = data[d]['domain']
+					
+					if domain == "Twitter":
+						tweet = data[d]['tweet'].replace("https://twitter.com", '')
+						tuples = (date, domain, tweet, 'None')
+						TABLE_DATA.append(tuples)
+					
+					else:
+						publication = data[d]['urlMedia']
+						publicationShort = shortCutUrl(publication)
+						typePublication = data[d]['type']
+						localisation = data[d]['location']
+						
+						if localisation:
+							list_placeVisited.append(localisation)
+						
+						tuples = (date, domain, publicationShort, localisation)
+						TABLE_DATA.append(tuples)
 
-			elif choix == '' or choix.upper() == 'N':
-				break        
+				tableLastPost = SingleTable(TABLE_DATA, " Last post ")
+
+				print(tableLastPost.table)
+			print("-------------")
+			print("\n"+global_info)
+
+			if len(list_news) > 0:
+				newsItems = "; ".join(list_news)
+				print("Nouveautés:\n"+newsItems)
+			
+			print("-------------")
+
+			print(question+" Voulez-vous exporter les données récupérées dans '%s' ? " % (name_txt))
+
+			while True:
+				choix = input("\n [O/n]: ")
+
+				if choix == '' or choix.upper() == 'O':
+					f = pr.exportText(name_txt, path, global_info)
+					if f:
+						print("\n"+found+" Données exporté avec succès !")
+						print(" %s" % (path_txt))
+					else:
+						print("\n"+warning+" Une erreur est survenue, les données n'ont pas pu être exporté !")
+					break
+
+				elif choix.upper() == 'N':
+					break
+
+			print("\n"+question+" Voulez-vous créer une copie de '%s' ? " % (name_txt))
+			
+			while True:
+				choix = input("\n [o/N]: ")
+
+				if choix.upper() == 'O':
+					print("\n"+question+" Ou voulez-vous enregistrer la copie ?")
+					pathDefault = os.getcwd()
+					print(Fore.YELLOW+" Default path: "+pathDefault+Fore.RESET)
+					path = input("\n Path: ")
+
+					if not path:
+						path = pathDefault
+						path += "\\"
+					if path.endswith(".txt"):
+						path = path_txt
+					else:
+						path = path+name_txt
+
+					with open(path, 'w', encoding="utf-8") as f:
+						f.write(global_info)
+						f.close()
+
+					print("\n"+found+" '%s' a été copié avec succès !" % (name_txt))
+					break
+
+				elif choix == '' or choix.upper() == 'N':
+					break        
 
 	else:
 		print("\n"+warning+" Profile not found")
