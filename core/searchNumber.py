@@ -1,13 +1,19 @@
 import requests
-
-from core.searchPJ import searchPJ
-from core.searchInfoNumero import searchInfoNumero
-from core.searchLocalCH import searchLocalCH
-from core.searchYellowLU import searchYellowLU
 from terminaltables import SingleTable
 
-def searchNumber(codemonpays):
-	num = input(" Téléphone: ")
+
+# settings
+import settings
+
+# /core
+from core.searchPJ 			import searchPJ
+from core.searchInfoNumero 	import searchInfoNumero
+from core.searchLocalCH 	import searchLocalCH
+from core.searchYellowLU 	import searchYellowLU
+
+def searchNumber(num):
+
+	print(wait+"Recherche de '%s'..." % (num))
 
 	headers = {
 		'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36',

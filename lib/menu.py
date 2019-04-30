@@ -1,9 +1,15 @@
 import sys, os, time, random
-from core.Profiler import *
 from colorama import Fore
-import settings
 from datetime import date
-from txt.text import text
+
+# settings
+import settings
+
+# /core
+from core.Profiler import *
+
+# /txt
+from txt.text 	import text
 from txt.header import lb_header
 
 
@@ -24,6 +30,27 @@ def times():
 	times = time.strftime("%H:%M:%S")
 	times = str(times)
 	return(times)
+
+def printOption(option):
+	title = """
+	Name \t\t Value
+	---- \t\t -----     
+	"""
+
+	print(title)
+	for o in option:
+		lengt = len(o)
+		lengt = 12 - lengt
+		name = o
+		name += ' ' * lengt
+		value = option.get(o)
+		
+		if not value:
+			value = Fore.RED+"None"+Fore.RESET
+		else:
+			value = Fore.CYAN+value+Fore.RESET
+
+		print("\t%s \t %s" % (name, value))
 
 def menu():
 	pr = Profiler()

@@ -96,4 +96,4 @@ def searchCopainsdavant(nom, city):
 
 	if count > 0:
 		table_instance = SingleTable(TABLE_DATA, title)
-		print(table_instance.table)
+		# print(table_instance.table)

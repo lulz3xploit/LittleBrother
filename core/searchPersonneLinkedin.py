@@ -12,18 +12,21 @@ def searchPersonneLinkedin(nom, city):
 	linkedin.search(nom, city)
 	found = linkedin.found
 
+	regroup = None
+
 	if found:
 		employee = linkedin.employees
 		profile = linkedin.profiles
 
 		regroup = zip(employee, profile)
 
-		TABLE_DATA = [
-			("Name", "Url"),
-		] 
+	return(regroup)
+		# TABLE_DATA = [
+		# 	("Name", "Url"),
+		# ] 
 
-		for r in regroup:
-			TABLE_DATA.append(r)
+		# for r in regroup:
+		# 	TABLE_DATA.append(r)
 
-		table = SingleTable(TABLE_DATA, title=" LinkedIn ")
-		print(table.table)
+		# table = SingleTable(TABLE_DATA, title=" LinkedIn ")
+		# # print(table.table)

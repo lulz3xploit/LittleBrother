@@ -1,16 +1,17 @@
 from bs4 import BeautifulSoup
 from core.searchInfoNumero import searchInfoNumero
 from terminaltables import SingleTable
-from colorama import init, Fore,  Back,  Style
 
-warning = "["+Fore.RED+"!"+Fore.RESET+"]"
-question = "["+Fore.YELLOW+"?"+Fore.RESET+"]"
-found = "["+Fore.GREEN+"+"+Fore.RESET+"]"
-wait = "["+Fore.MAGENTA+"*"+Fore.RESET+"]"
-
-init()
+# settings
+import settings
 
 def searchPJ(requete='', num=''):
+
+	regroup = None 
+	
+	# color
+	warning = settings.warning
+
 	def testResponse(requete):
 		noReponse = soup.find("p", {"class": "wording-no-responses"})
 		if noReponse:
@@ -20,15 +21,11 @@ def searchPJ(requete='', num=''):
 	page = requete.text #content.decode('utf-8')
 	soup = BeautifulSoup(page, "html.parser")
 	rep = testResponse(requete)
-	if rep == 1:
-		print(warning+" Aucun résultat pour votre recherche... o_o'")
-		if num != '':
-			# phoneNumber(num)
-			pass
-		else:
-			pass
-	else:
-		pass
+	# if rep == 1:
+	# 	# print(warning+" Aucun résultat pour votre recherche... o_o'")
+	# 	if num != '':
+	# 		# phoneNumber(num)
+	# 		pass
 
 	try:
 		nameList = soup.find_all("a", {"class": "denomination-links pj-lb pj-link"})
@@ -62,24 +59,25 @@ def searchPJ(requete='', num=''):
 	# 	print("[!] Aucun resultat pour votre recherche... o_o'")
 
 	regroup = zip(namesList2,addressesList2,numesList2, operatorList)
-	
-	title = " Particulier "
 
-	TABLE_DATA = [
-		('Name', 'Adresse', 'Phone', 'Operateur'),
-	]
+	return(regroup)	
+	# title = " Particulier "
 
-	listeInfos = []
+	# TABLE_DATA = [
+	# 	('Name', 'Adresse', 'Phone', 'Operateur'),
+	# ]
 
-	for infos in regroup:
+	# listeInfos = []
+
+	# for infos in regroup:
 		
-		try:
+	# 	try:
 
-			TABLE_DATA.append(infos)
+	# 		TABLE_DATA.append(infos)
 
-		except AttributeError:
-			pass
+	# 	except AttributeError:
+	# 		pass
 
-	if rep != 1:
-		table_instance = SingleTable(TABLE_DATA, title)
-		print("\n"+table_instance.table)
+	# if rep != 1:
+	# 	table_instance = SingleTable(TABLE_DATA, title)
+	# 	# print("\n"+table_instance.table)

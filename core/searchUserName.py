@@ -1,17 +1,23 @@
 import requests
+
+# /core
 from core.searchGoogle import searchGoogle
-from colorama import init, Fore,  Back,  Style
 
-warning = "["+Fore.RED+"!"+Fore.RESET+"]"
-question = "["+Fore.YELLOW+"?"+Fore.RESET+"]"
-found = "["+Fore.GREEN+"+"+Fore.RESET+"]"
-wait = "["+Fore.MAGENTA+"*"+Fore.RESET+"]"
+# settings
+import settings
 
-def searchUserName():
-	username = input(" Pseudo: ")
-	print("\n"+wait+" Recherche '%s'..." % (username))
+def searchUserName(username):
 
-	# url = "https://www.google.com/search?num=100&q=\\\"%s\"\\"
+	# color
+	wait = settings.wait
+
+	# get settings
+	verrou = settings.verrou
+	personneInfo = settings.personneInfo
+
+	with verrou:
+		print("\n"+wait+" Recherche '%s'..." % (username))
+
 	url = "https://www.google.com/search?num=100&q=\\%s\\"
 	url2 = "https://www.google.com/search?num=100&q=\\intitle:\"%s\"\\"
 	requete = requests.get(url % (username))

@@ -1,17 +1,14 @@
-from colorama import init, Fore,  Back,  Style
-from core.leaked import leaked
-from terminaltables import SingleTable
 import requests, re
+from colorama 		import Fore
+from terminaltables import SingleTable
 
-warning = "["+Fore.RED+"!"+Fore.RESET+"]"
-question = "["+Fore.YELLOW+"?"+Fore.RESET+"]"
-found = "["+Fore.GREEN+"+"+Fore.RESET+"]"
-wait = "["+Fore.MAGENTA+"*"+Fore.RESET+"]"
+# settings
+import settings
 
-init()
+# /core
+from core.leaked import leaked
 
-def SearchEmail():
-	email = input(" Email: ")
+def SearchEmail(email):
 	print("\n"+wait+" Recherche d'information sur '%s'..." % (email))
 	lkd = leaked()
 	leak = lkd.email(email)

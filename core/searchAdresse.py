@@ -1,20 +1,28 @@
 import requests
-from core.searchLocalCH import searchLocalCH
-from core.searchYellowLU import searchYellowLU
-from core.searchPJ import searchPJ
-from colorama import init, Fore,  Back,  Style
 
-warning = "["+Fore.RED+"!"+Fore.RESET+"]"
-question = "["+Fore.YELLOW+"?"+Fore.RESET+"]"
-found = "["+Fore.GREEN+"+"+Fore.RESET+"]"
-wait = "["+Fore.MAGENTA+"*"+Fore.RESET+"]"
+# /core
+from core.searchLocalCH  	import searchLocalCH
+from core.searchYellowLU 	import searchYellowLU
+from core.searchPJ 			import searchPJ
 
-init()
+# /utils
+from utils.likeThis import likeThis
 
-def searchAdresse(codemonpays):
-	adresse = input(" Adresse: ")
-	# clear()
-	print("\n"+wait+" Recherche '%s'..." % (adresse))
+# settings
+import settings
+
+def searchAdresse(adresse):
+	# icon color
+	wait = settings.wait
+
+	# get settings
+	codemonpays  = settings.codemonpays
+	verrou 	 	 = settings.verrou 
+	personneInfo = settings.personneInfo
+	
+	with verrou:
+		msg = wait+" Recherche '%s'..." % (adresse)
+		print(msg)
 
 	headers = {
 		'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36',

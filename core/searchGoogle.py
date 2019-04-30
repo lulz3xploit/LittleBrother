@@ -57,8 +57,6 @@ def searchGoogle(requete='', requete2=''):
 					if not "/policies/faq" in url:
 					# if "insta" in url or "twitter" in url or "facebook" in url:
 						print("[++] Possible connection: "+url)
-	else:
-		pass
 
 	content = requete.text
 	urls = re.findall('url\\?q=(.*?)&', content)

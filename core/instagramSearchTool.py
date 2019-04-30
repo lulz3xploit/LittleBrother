@@ -1,169 +1,201 @@
-import requests, re, json, time
+import requests, re, json, time, random
+
+# /core
+from core.getUrlGoogleSearch import getUrlGoogleSearch
+from core.RegexTool 		 import RegexTool
+from core.shortCutUrl 		 import shortCutUrl
+
+# /lib
+from lib.download import download
 
 class instagramSearchTool:
+		
+	def _getJsonData(self, page):
+		jsonData 	  = re.findall(r"<script type=\"text/javascript\">(.*);</script>", page)
+		jsonDataFound = jsonData[0].replace("window._sharedData = ", "")
+		values 		  = json.loads(jsonDataFound)
+
+		return(values)
+
+	def _getNameById(self, ownerId):
+		username = None
+		name 	 = None
+		
+		urlApi  = "https://i.instagram.com/api/v1/users/"
+		urlApi += str(ownerId)
+		urlApi += "/info/"
+		
+		req = requests.get(urlApi)
+
+		if req.status_code == 200:
+			value = json.loads(req.text)
+			value = value['user']
+
+			username = value['username']
+			name 	 = value['full_name']
+
+		return((username, name))
+
+	def _scrapperInstaExplorer(self, page):
+		dict_postMedia = {}
+
+		values = self._getJsonData(page)
+		
+		try:
+			medias = values['entry_data']['LocationsPage'][0]['graphql']['location']['edge_location_to_media']['edges']
+		except:
+			medias = values['entry_data']['TagPage'][0]['graphql']['hashtag']['edge_hashtag_to_media']['edges']
+
+		count  = len(medias)
+		
+		x = 0
+		while x < count:
+			try:
+				description = medias[x]['node']['edge_media_to_caption']['edges'][0]['node']['text']
+			except:
+				description = None
+
+			ownerId = medias[x]['node']['owner']['id']
+			media 	= medias[x]['node']['display_url']
+			media 	= shortCutUrl(media)
+
+			profile  = self._getNameById(ownerId)
+			username = profile[0]
+			name     = profile[1] 
+				
+			dico = {
+				username: {
+					"name" : name,
+					"media": media,
+					"id"   : ownerId,
+				}
+			}
+
+			dict_postMedia.update(dico)
+
+			x += 1
+
+		return(dict_postMedia)
+
+
+	def downloadPictures(self, url, path):
+			download(displayMedia, path, filename)
+
 
 	def getInfo(self, username):
+		profilId 	= None
+		profilPicHd = None
+		bio			= None
+		user		= None
+		name		= None
+		private		= None
+		follower	= None
+		friend		= None
+		media		= None
+		urlAccount	= None
+		email		= None
+		url 		= None
+		adresse 	= None
+		phone 		= None
+
 		if username.startswith("http"):
 			urlSite = username
 		else:
 			urlSite = "https://instagram.com/"+username
 
-		profilId = "None"
-		profilPicHd = None
-		bio = None
-		user = None
-		name = None
-		private = None
-		follower = None
-		friend = None
-		media = None
-		urlAccount = None
-
-		email = None
-		url = None
-		adresse = None
-		phone = None
-
 		req = requests.get(urlSite)
-		page = req.content.decode('utf-8')
-
+		
 		if req.status_code == 200:
-			jsonData = re.findall(r"<script type=\"text/javascript\">(.*);</script>", page)
-			jsonDataFound = jsonData[0].replace("window._sharedData = ", "")
-			values = json.loads(jsonDataFound)
+
+			page = req.content.decode('utf-8')
 			
-			urlAccount = url
-			profilId = values['entry_data']['ProfilePage'][0]['graphql']['user']['id']
-			bio = values['entry_data']['ProfilePage'][0]['graphql']['user']['biography']
-			user = values['entry_data']['ProfilePage'][0]['graphql']['user']['username']
-			name = values['entry_data']['ProfilePage'][0]['graphql']['user']['full_name']
-			private = values['entry_data']['ProfilePage'][0]['graphql']['user']['is_private']
-			follower = values['entry_data']['ProfilePage'][0]['graphql']['user']['edge_followed_by']['count']
-			friend = values['entry_data']['ProfilePage'][0]['graphql']['user']['edge_follow']['count']
-			media = values['entry_data']['ProfilePage'][0]['graphql']['user']['edge_owner_to_timeline_media']['count']
-			profilPicHd = values['entry_data']['ProfilePage'][0]['graphql']['user']['profile_pic_url_hd']
+			values = self._getJsonData(page)
 
-			if not private:
-				jsonData2 = re.findall(r"script type=\"application/ld\+json\">\n(.*)", page)
-				
-				if jsonData2:
-					jsonDataFound2 = jsonData2[0]
+			try:
+				values = values['entry_data']['ProfilePage'][0]['graphql']['user']
+			
+				urlAccount 	= url
+				profilId 	= values['id']
+				bio 		= values['biography']
+				user 		= values['username']
+				name 		= values['full_name']
+				private 	= values['is_private']
+				follower 	= values['edge_followed_by']['count']
+				friend 		= values['edge_follow']['count']
+				media 		= values['edge_owner_to_timeline_media']['count']
+				profilPicHd = values['profile_pic_url_hd']
+
+				if not private:
+					jsonData2 = re.findall(r"script type=\"application/ld\+json\">\n(.*)", page)
 					
-					values = json.loads(jsonDataFound2)
+					if jsonData2:
+						jsonDataFound2 = jsonData2[0]
+						
+						values = json.loads(jsonDataFound2)
 
-					try:
-						url = values['url']
-					except:
-						url = None
+						try:
+							url = values['url']
+						except:
+							url = None
 
-					try:
-						email = values['email']
-					except:
-						email = None
+						try:
+							email = values['email']
+						except:
+							email = None
 
-					try:
-						adresse = values['adresse']['addressLocality']
-					except:
-						adresse = None
+						try:
+							adresse = values['adresse']['addressLocality']
+						except:
+							adresse = None
 
-					try:
-						phone = values['telephone']
-					except:
-						phone = None
+						try:
+							phone = values['telephone']
+						except:
+							phone = None
+			except:
+				pass		
 
-		self.id = profilId
-		self.profi_pic_hd = profilPicHd
-		self.biography = bio
-		self.username = user
-		self.name = name
-		self.private = private
-		self.followers = follower
-		self.friends = friend
-		self.medias = media
-		self.urlAccount = urlAccount
-
-		self.email = email
-		self.url = url
-		self.adresse = adresse
-		self.phone = phone
+		self.id 		  	= profilId
+		self.profi_pic_hd 	= profilPicHd
+		self.biography 		= bio
+		self.username		= user
+		self.name 			= name
+		self.private 		= private
+		self.followers 		= follower
+		self.friends 		= friend
+		self.medias 		= media
+		self.urlAccount 	= urlAccount
+		self.email 			= email
+		self.url 			= url
+		self.adresse 		= adresse
+		self.phone 			= phone
 
 	def searchInsta(self, nom):
-		encodeDic = {
-			"%21": "!",
-			"%23": "#",
-			"%24": "$",
-			"%26": "&",
-			"%27": "'",
-			"%28": "(",
-			"%29": ")",
-			"%2A": "*",
-			"%2B": "+",
-			"%2C": ",",
-			"%2F": "/",
-			"%3A": ":",
-			"%3B": ";",
-			"%3D": "=",
-			"%3F": "?",
-			"%40": "@",
-			"%5B": "[",
-			"%5D": "]", 
-			"%20": " ",
-			"%22": "\"",
-			"%25": "%",
-			"%2D": "-",
-			"%2E": ".",
-			"%3C": "<",
-			"%3E": ">",
-			"%5C": "\\",
-			"%5E": "^",
-			"%5F": "_",
-			"%60": "`",
-			"%7B": "{",
-			"%7C": "|",
-			"%7D": "}",
-			"%7E": "~",
-		}
-
 		accountsList = []
 
-		url = "https://encrypted.google.com/search?num=20&q=\\%s site:instagram.com\\" % (nom)
+		url  = "https://encrypted.google.com/search?num=20&q=\\%s site:instagram.com\\" % (nom)
 		page = requests.get(url).text
-		urls = re.findall('url\\?q=(.*?)&', page)
 		
+		urls = getUrlGoogleSearch(page)
+
 		for url in urls:
-			for char in encodeDic:
-				find = re.search(char, url)
-				if find:
-					charDecode = encodeDic.get(char)
-					url = url.replace(char, charDecode)
-			if not "googleusercontent" in url:
-				if not "/settings/ads" in url:
-					if not "/policies/faq" in url:
-						if not "www.instagram.com/p/" in url:
-							account = re.findall(r"instagram\.com/(.*?)/", url)[0]
-							accountsList.append(account)
+			if not "www.instagram.com/p/" in url:
+				account = re.findall(r"instagram\.com/(.*?)/", url)[0]
+				accountsList.append(account)
 							
 		self.accounts = accountsList
 
-	def downloadPictures(self, url, path):
-		if not path.endswith("/"):
-			path += "/"
+	def get_picturesInfo(self, url):
+		if url.startswith("http"):
+			url = url
+		else:
+			url = "https://instagram.com/"+url
 
-		def download(url, path, filename):
-			r = requests.get(url)
-			f = open(path+filename,'wb');
-		
-			for chunk in r.iter_content(chunk_size=255): 
-				if chunk:
-					f.write(chunk)
-
-			f.close()
+		dict_picturesInfo = {}
 
 		page = requests.get(url).content.decode('utf-8')
-		jsonData = re.findall(r"<script type=\"text/javascript\">(.*);</script>", page)
-		jsonDataFound = jsonData[0].replace("window._sharedData = ", "")
-			
-		values = json.loads(jsonDataFound)
+
+		values = self._getJsonData(page)
 		
 		nbMedia = values['entry_data']['ProfilePage'][0]['graphql']['user']['edge_owner_to_timeline_media']['count']
 
@@ -171,12 +203,11 @@ class instagramSearchTool:
 			nbMedia = 11
 
 		MediaDic = values['entry_data']['ProfilePage'][0]['graphql']['user']['edge_owner_to_timeline_media']['edges']
+		
 		countX = 0
-
 		while countX <= nbMedia:
 			displayMedia = MediaDic[countX]['node']['display_url']
 			isVideo = MediaDic[countX]['node']['is_video']
-			location = MediaDic[countX]['node']['location']
 			date = MediaDic[countX]['node']['taken_at_timestamp']
 			date = time.ctime(int(date))
 
@@ -185,16 +216,80 @@ class instagramSearchTool:
 			except:
 				infoMedia = ""
 
-			filename = url.split("/")
-			filename = [i for i in filename if i != '']
-			filename = filename[-1] + "_Picture_"+str(countX)+".png"
+			try:
+				location = MediaDic[countX]['node']['location']['name']
+			except:
+				location = None
 
 			if isVideo:
 				typeMedia = "Video"
 			else:
 				typeMedia = "Photo"
 
-			download(displayMedia, path, filename)
-			print("[*] (%s) [%s] %s '%s' " % (str(countX), date, typeMedia, infoMedia))
+
+			dic = {
+				countX: {
+					"display"	   : displayMedia,
+					"type_media"   : typeMedia,
+					"date"		   : date,
+					"info"		   : infoMedia,
+					"localisation" : location
+				}
+			}
 
 			countX += 1
+
+			dict_picturesInfo.update(dic)
+
+		return(dict_picturesInfo)
+
+
+	def getMediaWithLoc(self, location):
+		urlCity = []
+		profilVisitedCity = {}
+
+		url  = "https://encrypted.google.com/search?q=site:instagram.com inurl:/locations inurl:/"
+		url += location
+
+		page = requests.get(url).text
+
+		urls = getUrlGoogleSearch(page)
+
+		for url in urls:
+			if "instagram.com/explore/locations/" in url:
+				find = re.search(r"[0-9]+/", url)
+				if find:
+					place = re.findall(r"[0-9]+/(.*)", url)[0]
+					place = place.replace("-", " ").replace("/", ", ").strip()
+					
+					if "?" in place:
+						place = place.split("?")[:-1][0]
+
+					urlCity.append(url)
+
+		for url in urlCity:
+			req = requests.get(url)
+			
+			if req.status_code == 200:
+				profilVisitedCity = self._scrapperInstaExplorer(req.text)
+				
+				data = {"place":place}
+				
+				profilVisitedCity.update(data)
+
+		return(profilVisitedCity)
+
+	def searchByTag(self, tag):
+		url = "https://www.instagram.com/explore/tags/"
+		url += tag
+
+		req = requests.get(url)
+
+		if req.status_code == 200:
+			profils = self._scrapperInstaExplorer(req.text)
+
+			data = {"tag":tag}
+
+			profils.update(data)
+
+		return(profils)
