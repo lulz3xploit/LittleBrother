@@ -12,8 +12,13 @@ class instagramSearchTool:
 		
 	def _getJsonData(self, page):
 		jsonData 	  = re.findall(r"<script type=\"text/javascript\">(.*);</script>", page)
-		jsonDataFound = jsonData[0].replace("window._sharedData = ", "")
-		values 		  = json.loads(jsonDataFound)
+		
+		if jsonData:
+			jsonDataFound = jsonData[0].replace("window._sharedData = ", "")
+			values 		  = json.loads(jsonDataFound)
+
+		else:
+			values = None
 
 		return(values)
 
@@ -200,49 +205,53 @@ class instagramSearchTool:
 
 		values = self._getJsonData(page)
 		
-		nbMedia = values['entry_data']['ProfilePage'][0]['graphql']['user']['edge_owner_to_timeline_media']['count']
+		try:
+			nbMedia = values['entry_data']['ProfilePage'][0]['graphql']['user']['edge_owner_to_timeline_media']['count']
 
-		if nbMedia > 11:
-			nbMedia = 11
+			if nbMedia > 11:
+				nbMedia = 11
 
-		MediaDic = values['entry_data']['ProfilePage'][0]['graphql']['user']['edge_owner_to_timeline_media']['edges']
-		
-		countX = 0
-		while countX <= nbMedia:
-			displayMedia = MediaDic[countX]['node']['display_url']
-			isVideo = MediaDic[countX]['node']['is_video']
-			date = MediaDic[countX]['node']['taken_at_timestamp']
-			date = time.ctime(int(date))
+			MediaDic = values['entry_data']['ProfilePage'][0]['graphql']['user']['edge_owner_to_timeline_media']['edges']
+			
+			countX = 0
+			while countX <= nbMedia:
+				displayMedia = MediaDic[countX]['node']['display_url']
+				isVideo = MediaDic[countX]['node']['is_video']
+				date = MediaDic[countX]['node']['taken_at_timestamp']
+				date = time.ctime(int(date))
 
-			try:
-				infoMedia = MediaDic[countX]['node']['accessibility_caption']
-			except:
-				infoMedia = ""
+				try:
+					infoMedia = MediaDic[countX]['node']['accessibility_caption']
+				except:
+					infoMedia = ""
 
-			try:
-				location = MediaDic[countX]['node']['location']['name']
-			except:
-				location = None
+				try:
+					location = MediaDic[countX]['node']['location']['name']
+				except:
+					location = None
 
-			if isVideo:
-				typeMedia = "Video"
-			else:
-				typeMedia = "Photo"
+				if isVideo:
+					typeMedia = "Video"
+				else:
+					typeMedia = "Photo"
 
 
-			dic = {
-				countX: {
-					"display"	   : displayMedia,
-					"type_media"   : typeMedia,
-					"date"		   : date,
-					"info"		   : infoMedia,
-					"localisation" : location
+				dic = {
+					countX: {
+						"display"	   : displayMedia,
+						"type_media"   : typeMedia,
+						"date"		   : date,
+						"info"		   : infoMedia,
+						"localisation" : location
+					}
 				}
-			}
 
-			countX += 1
+				countX += 1
 
-			dict_picturesInfo.update(dic)
+				dict_picturesInfo.update(dic)
+
+		except:
+			pass
 
 		return(dict_picturesInfo)
 
