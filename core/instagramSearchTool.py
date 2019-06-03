@@ -180,8 +180,11 @@ class instagramSearchTool:
 
 		for url in urls:
 			if not "www.instagram.com/p/" in url:
-				account = re.findall(r"instagram\.com/(.*?)/", url)[0]
-				accountsList.append(account)
+				account = re.findall(r"instagram\.com/(.*?)/", url)
+           if not account:
+               account = None
+           else:
+				    accountsList.append(account)
 							
 		self.accounts = accountsList
 
