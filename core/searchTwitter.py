@@ -23,7 +23,7 @@ def searchTwitter():
 
 	print("\n[@%s]" % (username))
 	print("\n[+] Name: %s" % (name))
-	print("[+] Langue: %s" % (langue.upper()))
+	print("[+] Langue: %s" % (langue))
 	print("[+] Privee: %s" % (protected))
 	print("[+] ID: %s" % (profilId))
 	print("[+] Protected: %s" % (protected))
