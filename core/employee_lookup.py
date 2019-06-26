@@ -22,16 +22,15 @@ def employee_lookup():
 
 	if found:
 		employee = linkedin.employees
-		profile = linkedin.profiles
-
-		regroup = zip(employee, profile)
 
 		TABLE_DATA = [
-			("Name", "Url"),
+			("Num", "Name"),
 		] 
 
-		for r in regroup:
-			TABLE_DATA.append(r)
+		x = 1
+		for employe in employee:
+			TABLE_DATA.append((x, employe))
+			x += 1
 
 		table = SingleTable(TABLE_DATA, title=" LinkedIn ")
 		print(table.table)
