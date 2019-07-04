@@ -23,25 +23,39 @@ class searchLinkedIn:
 		linkedin_list = self.linkedin_list
 
 		employee_list = []
+		pages_list = []
 
 		req = requests.get(google_search, headers=self.headers)
 		status_code = req.status_code
 
 		if status_code == 200:
 			html = BeautifulSoup(req.text, "html.parser")
-			results = html.find_all('h3', { 'class' : 'LC20lb' })
+			results = html.find_all('div', { 'class' : 'r' })
 
 			for res in results:
-				employee = res.text.strip()
-
+				employee = res.find_all("h3", {"class":"LC20lb"})
+				if employee:
+					employee = employee[0].text.strip()
+				
 				if "LinkedIn" in employee:
 					for l in linkedin_list:
 						if l in employee:
 							employee = employee.replace(l, "")
 							employee_list.append(employee)
 
+				page = res.find_all("cite", {'class':'iUh30'})
+			
+				if page:
+					page = page[0].text.strip()
+					page = page.split("/")[3:]
+					page = '/'.join(page)
+					page = '/'+page
+					pages_list.append(page)
+
+		
 		if len(employee_list) > 0:
 			found = len(employee_list)
 
 		self.found = len(employee_list)
 		self.employees = employee_list
+		self.profiles = pages_list
