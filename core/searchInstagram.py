@@ -68,6 +68,21 @@ def searchInstagram():
 				if not path:
 					path = pathDefault
 			
-				insta.downloadPictures(urlProfil, path)
+				pictureInfo = insta.get_picturesInfo(urlProfil)
+
+				for i in pictureInfo:
+					media = pictureInfo[i]['display']
+					typeMedia = pictureInfo[i]['type_media']
+					date = pictureInfo[i]['date']
+					view = pictureInfo[i]['info']
+					loc = pictureInfo[i]['localisation'] 
+					filename = user+'_'+str(i)+".jpg"
+
+					if not loc:
+						loc = ''
+
+					insta.downloadPictures(media, path, filename)
+					print("(%s) %s %s [%s] %s téléchargé." % (str(i), typeMedia, date, view, loc))
+
 				print("\n"+found+" Téléchargement fini.")
 				break
