@@ -1,4 +1,6 @@
-def download(self, url, path, filename):
+import requests
+
+def download(url, path, filename):
 	r = requests.get(url)
 	f = open(path+filename,'wb');
 
