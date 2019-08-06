@@ -83,8 +83,11 @@ class instagramSearchTool:
 		return(dict_postMedia)
 
 
-	def downloadPictures(self, url, path):
-			download(displayMedia, path, filename)
+	def downloadPictures(self, url, path, filename):
+		if not path.endswith("/"):
+			path += "/"
+		
+		download(url, path, filename)
 
 
 	def getInfo(self, username):
