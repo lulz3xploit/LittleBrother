@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from core.LinkedIn import searchLinkedIn
 from colorama import init, Fore,  Back,  Style
 from terminaltables import SingleTable
