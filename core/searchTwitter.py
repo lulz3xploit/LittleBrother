@@ -19,8 +19,10 @@ def searchTwitter():
 	verif = twitool.verified
 	status = twitool.status
 	langue = twitool.langue
-	naissance = twitool.birth
-
+	try:
+		naissance = twitool.birth
+	except:
+		naissance = "None"
 	print("\n[@%s]" % (username))
 	print("\n[+] Name: %s" % (name))
 	print("[+] Langue: %s" % (langue))

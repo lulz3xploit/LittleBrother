@@ -74,10 +74,10 @@ class twitterSearchTool():
 			status = values['profile_user']['statuses_count']
 			langue = values['profile_user']['lang']
 
-			if not birthDate:
-				self.birth = "None"
+			if birthDate:
+				self.birth = birthDate
 			else:
-				self.birth = birthDate[0].strip()
+				self.birth = "None"
 
 		self.id = profilId
 		self.name = name
