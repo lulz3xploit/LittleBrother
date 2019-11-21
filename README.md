@@ -65,10 +65,12 @@ Installation Windows
 - 3. Install Python 3 with "Add to path" options.
 - 4. Unzip LittleBrother (master.zip)
 - 5. Open CMD and execute:
+```
     cd LittleBrother-master
     python -m pip install -r requirements.txt
     python LittleBrother.py
-    
+```
+
 Features
 =
  - Lookup:
