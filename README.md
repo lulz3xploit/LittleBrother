@@ -50,14 +50,25 @@ Python Modules
 - colorama
 
 
-Installation
+Installation Linux
 =
+    sudo apt install git python3
     git clone https://github.com/Lulz3xploit/LittleBrother
     cd LittleBrother
     python3 -m pip install -r requirements.txt
     python3 LittleBrother.py
 
-
+Installation Windows
+=
+- 1. Download [LittleBrother](https://github.com/lulz3xploit/LittleBrother/archive/master.zip)
+- 2. Download [python 3](https://www.python.org/downloads/release/python-380/) 
+- 3. Install Python 3 with "Add to path" options.
+- 4. Unzip LittleBrother (master.zip)
+- 5. Open CMD and execute:
+    cd LittleBrother-master
+    python -m pip install -r requirements.txt
+    python LittleBrother.py
+    
 Features
 =
  - Lookup:
