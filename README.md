@@ -9,6 +9,30 @@ Disclaimer
 =
 LittleBrother a été développé pour faire des recherches sur soi-même et pour voir les informations privées et sensibles que l'on peut laisser derrière sur les réseaux sociaux. Je n'encourage en aucun cas l'utilisation de cet outil sur une autre personne que soi-même ou d'utiliser cet outil à mauvais escient.
 
+
+Installation Linux
+=
+    sudo apt install git python3
+    git clone https://github.com/Lulz3xploit/LittleBrother
+    cd LittleBrother
+    python3 -m pip install -r requirements.txt
+    python3 LittleBrother.py
+
+Installation Windows
+=
+- 1. Download [LittleBrother](https://github.com/lulz3xploit/LittleBrother/archive/master.zip)
+- 2. Download [python 3](https://www.python.org/downloads/release/python-380/) 
+- 3. Install Python 3 with "Add to path" options and click "Install Now" like:
+![](https://datatofish.com/wp-content/uploads/2018/10/0001_add_Python_to_Path.png)
+- 4. Unzip LittleBrother (master.zip)
+- 5. Open CMD, move to the directory where you export the littlebrother folder with ```cd``` command.
+     Ex: ```cd Desktop\``` and execute:
+```
+    cd LittleBrother-master
+    python -m pip install -r requirements.txt
+    python LittleBrother.py
+```
+
 Discord
 =
 Si vous avez des questions, des idées, des problèmes concernant LittleBrother ou si vous voulez juste suivre l'avancement de ce projet.  
@@ -48,28 +72,6 @@ Python Modules
 - bs4
 - terminaltables
 - colorama
-
-
-Installation Linux
-=
-    sudo apt install git python3
-    git clone https://github.com/Lulz3xploit/LittleBrother
-    cd LittleBrother
-    python3 -m pip install -r requirements.txt
-    python3 LittleBrother.py
-
-Installation Windows
-=
-- 1. Download [LittleBrother](https://github.com/lulz3xploit/LittleBrother/archive/master.zip)
-- 2. Download [python 3](https://www.python.org/downloads/release/python-380/) 
-- 3. Install Python 3 with "Add to path" options.
-- 4. Unzip LittleBrother (master.zip)
-- 5. Open CMD and execute:
-```
-    cd LittleBrother-master
-    python -m pip install -r requirements.txt
-    python LittleBrother.py
-```
 
 Features
 =
