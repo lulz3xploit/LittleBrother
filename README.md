@@ -16,7 +16,17 @@ Installation Linux
     git clone https://github.com/Lulz3xploit/LittleBrother
     cd LittleBrother
     python3 -m pip install -r requirements.txt
-    python3 LittleBrother.py
+    
+Execution Linux
+=
+- Go to Littlebrother directory with `cd` command. Ex: 
+```
+cd LittleBrother
+```
+And execute:
+```
+python3 LittleBrother.py
+```
 
 Installation Windows
 =
@@ -25,12 +35,23 @@ Installation Windows
 - 3. Install Python 3 with "Add to path" options and click "Install Now" like:
 ![](https://datatofish.com/wp-content/uploads/2018/10/0001_add_Python_to_Path.png)
 - 4. Unzip LittleBrother (master.zip)
-- 5. Open CMD, move to the directory where you export the littlebrother folder with ```cd``` command.
-     Ex: ```cd Desktop\``` and execute:
+- 5. Open CMD, move to the directory where you export the **LittleBrother-master** folder with ```cd``` command.
+     Ex: 
+```
+cd Desktop\
+``` 
+And execute:
 ```
     cd LittleBrother-master
     python -m pip install -r requirements.txt
-    python LittleBrother.py
+```
+
+Execution Windows:
+=
+- Go to **LittleBrother-master** directory with `cd` command. Ex: `cd Desktop\LittleBrother-master\`. 
+and execute:
+```
+python LittleBrother.py
 ```
 
 Discord
