@@ -30,7 +30,7 @@ class searchLinkedIn:
 
 		if status_code == 200:
 			html = BeautifulSoup(req.text, "html.parser")
-			results = html.find_all('div', { 'class' : 'r' })
+			results = html.find_all('div', {'class': 'r' })
 
 			for res in results:
 				employee = res.find_all("h3", {"class":"LC20lb"})
@@ -44,15 +44,10 @@ class searchLinkedIn:
 							employee_list.append(employee)
 
 				page = res.find_all("cite", {'class':'iUh30'})
-			
-				if page:
-					page = page[0].text.strip()
-					page = page.split("/")[3:]
-					page = '/'.join(page)
-					page = '/'+page
-					pages_list.append(page)
+				for p in page:
+					if "linkedin" in p.text.strip().lower():
+						pages_list.append(p.text.strip().split("›")[1])
 
-		
 		if len(employee_list) > 0:
 			found = len(employee_list)
 
