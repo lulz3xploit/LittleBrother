@@ -141,36 +141,35 @@ def searchPersonne(codemonpays):
 		if count > 0:
 			table_instance = SingleTable(TABLE_DATA, title)
 			print(table_instance.table)
+	# Instagram search
+
+		title = " Instagram "
+
+		instatls = instagramSearchTool()
+		instatls.searchInsta(nom)
+
+		accounts = instatls.accounts
+
+		TABLE_DATA = [
+			('Name', 'User'),
+		]
+
+		count = 0
+
+		for account in accounts:
+			url = "https://instagram.com/"+account
+			i = instagramSearchTool()
+			i.getInfo(url)
+			name = i.name
+
+			tuples = (name, account)
+			TABLE_DATA.append(tuples)
+
+			count +=1
+
+		if count > 0:
+			table = SingleTable(TABLE_DATA, title)
+			print(table.table)
 
 	except IOError:
 		pass
-
-# Instagram search
-	
-	title = " Instagram "
-
-	instatls = instagramSearchTool()
-	instatls.searchInsta(nom)
-
-	accounts = instatls.accounts
-
-	TABLE_DATA = [
-		('Name', 'User'),
-	]
-
-	x = 0
-
-	for account in accounts:
-		url = "https://instagram.com/"+account
-		i = instagramSearchTool()
-		i.getInfo(url)
-		name = i.name
-
-		tuples = (name, account)
-		TABLE_DATA.append(tuples)
-		
-		x +=1
-
-	if count > 0:
-		table = SingleTable(TABLE_DATA, title)
-		print(table.table)
