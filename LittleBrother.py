@@ -312,7 +312,7 @@ try:
 					menu()
 					print(countryMenu)
 				elif newCode.lower() == 'h':
-					print(helpMsg)
+					print(helpMain)
 		else:
 			pass
 			# print("Commande introuvable")
