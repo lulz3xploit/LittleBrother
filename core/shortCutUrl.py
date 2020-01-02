@@ -1,6 +1,11 @@
 import requests, re
+from lib.Url import Url
 
 def shortCutUrl(url):
+
+	url = Url(url).decode()
+	url = Url(url).encode()
+	
 	domain = 'https://is.gd/'
 	site = "http://is.gd/create.php?forsimple&url="
 	site += url
