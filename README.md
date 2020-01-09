@@ -7,51 +7,47 @@ LittleBrother est un outil de collectes d'informations (OSINT) qui vise à effec
 
 Disclaimer
 =
-LittleBrother a été développé pour faire des recherches sur soi-même et pour voir les informations privées et sensibles que l'on peut laisser derrière sur les réseaux sociaux. Je n'encourage en aucun cas l'utilisation de cet outil sur une autre personne que soi-même ou d'utiliser cet outil à mauvais escient.
+LittleBrother a été développé pour faire des recherches sur soi-même et pour voir les informations privées et sensibles que l'on peut laisser derrière sur les réseaux sociaux. Je n'encourage en aucun cas l'utilisation de cet outil sur une autre personne que soi-même ou d'utiliser cet outil à mauvais escient. Les auteurs de LittleBrother ne peuvent etre tenu pour responsable de l'utilisation de son outil.
 
 
-Installation Linux
+Installation sur Linux
 =
-    sudo apt install git python3
+Il faut avoir `git` et `python3` d'installer sur sa machine
+```
+    sudo apt install git python3 #sur les distributions utilisant APT (comme la famille Debian)
     git clone https://github.com/Lulz3xploit/LittleBrother
     cd LittleBrother
     python3 -m pip install -r requirements.txt
-    
+```    
+
 Execution Linux
 =
-- Go to Littlebrother directory with `cd` command. Ex: 
-```
-cd LittleBrother
-```
-And execute:
+Dans le repertoire de LittleBrother, lancez cette commande pour pouvoir lancer LittleBrother:
 ```
 python3 LittleBrother.py
 ```
 
-Installation Windows
+Installation sur Windows
 =
-- 1. Download [LittleBrother](https://github.com/lulz3xploit/LittleBrother/archive/master.zip)
-- 2. Download [python 3](https://www.python.org/downloads/release/python-380/) 
-- 3. Install Python 3 with "Add to path" options and click "Install Now" like:
-![](https://datatofish.com/wp-content/uploads/2018/10/0001_add_Python_to_Path.png)
-- 4. Unzip LittleBrother (master.zip)
-- 5. Open CMD, move to the directory where you export the **LittleBrother-master** folder with ```cd``` command.
-     Ex: 
+- 1. Telecharger [LittleBrother](https://github.com/lulz3xploit/LittleBrother/archive/master.zip)
+- 2. Installez Python depuis le Store Windows
+- 4. Dezipper LittleBrother (master.zip)
+- 5. Ouvrez `CMD` et allez dans le repertoire **`LittleBrother-master`** via la commande `cd`.
+     P.ex: 
 ```
 cd Desktop\
+cd LittleBrother-master\
 ``` 
-And execute:
+et executez:
 ```
-    cd LittleBrother-master
-    python -m pip install -r requirements.txt
+    python3 -m pip install -r requirements.txt
 ```
 
-Execution Windows:
+Lancer LittleBrother depuis Windows:
 =
-- Go to **LittleBrother-master** directory with `cd` command. Ex: `cd Desktop\LittleBrother-master\`. 
-and execute:
+- Allez dans le repertoire **LittleBrother-master** comme a son installation et executez la commande: 
 ```
-python LittleBrother.py
+python3 LittleBrother.py
 ```
 
 Discord
@@ -87,17 +83,16 @@ Python version:
 =
 - Python3
 
-Python Modules
+Modules Python
 =
 - requests
 - bs4
 - terminaltables
 - colorama
 
-Features
+Fonctionnalites
 =
  - Lookup:
-
 	- Phone lookup
 	- Email lookup
 	- Last name / First name lookup
