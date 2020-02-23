@@ -60,7 +60,7 @@ Nouveautées version 6.0
 - En plus (+)
 	- Un fichier 'requirements.txt' a été ajouté.
 	- Une nouvelle interface.
-	- Un nouveau module d'OSINT a été ajouté, le module 'Profiler' remplace la base de données et de 'Dox maker' dans la version anterieur de LittleBrother. Ce module permet de créer un profil et de récupérer des informations sur les sites définis par l'utilisateur, de sauvegarder ces données et d'afficher les derniers post publiés sur les réseaux (filtrés selon les dates de publication).
+	- Un nouveau module d'OSINT a été ajouté. Le module 'Profiler' permet de créer un profil et de récupérer des informations sur les sites définis par l'utilisateur, de sauvegarder ces données et d'afficher les derniers post publiés sur les réseaux (filtrés selon les dates de publication).
 	- De nouveaux services de recherche (Annuaires) ont été ajoutés selon la localisation de l'utilisateur. LittleBrother utilise votre IP pour déterminer le pays dans lequel vous vous trouvez. En aucun cas votre IP ou autre information privée sera partagé. Vous pourrez choisir un autre pays que le votre pour centraliser vos recherches.
 	- Recherche Instagram et LinkedIn intégrés à 'Personne Lookup'.
 	- Un nouveau module 'Employés recherche' qui permet de faire de trouver des personnes via une entreprise et une ville.
