@@ -70,7 +70,6 @@ Nouveautées version 6.0
 	- Certaines librairies python (dnspython, socket et smtplib) ont été supprimées pour cette version.
 	- 'Social engineering tool' a été modifié pour 'Other tool' il ne comporte que le module de brute force d'un Hash.
 	- Les modules 'Spam Email' et 'SMS' ont été retirés de LittleBrother.
-	- Le module de création de Dox 'Dox maker' a été retiré de LittleBrother.
 
 
 Compatible
