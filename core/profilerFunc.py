@@ -15,28 +15,31 @@ def profilerFunc(profile='', path=''):
 
 	from datetime import date
 	today = date.today()
-
+	instagramID = None
+	instagramBio = None
+	instagramUsername = None
+	instagramName = None
+	instagramEmail = None
+	instagramPhone = None
+	instagramUrlFound = None
+	instagramLocation = None
+	InstagramUrlAccount = None
 	today = None
 	profileID = None
 	profileName = None 
 	phones = None 
 	emails = None 
-	instagramLocation = None 
 	twitterLocation = None
 	facebookLocation = None
 	facebookWork = None
 	facebookUsername = None 
 	twitterUsername = None
-	instagramUsername = None
 	facebookID = None 
 	facebookUrl = None 
 	twitterID = None 
 	twitterUrlAccount = None
-	instagramID = None
-	InstagramUrlAccount = None
 	placeVisited = None
 	twitterBio = None 
-	instagramBio = None
 	
 	list_biographi = []
 	list_placeVisited = []
