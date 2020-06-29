@@ -1,3 +1,10 @@
+* [LittleBrother](#LittleBrother)
+* [Disclaimer](#Disclaimer)
+* [Installation sur Linux](#Installation-sur-Linux)
+* [Installation sur Windows](#Installation-sur-Windows)
+* [Contributeur](#Contributeur)
+* [Nous Soutenir](#Nous-Soutenir)
+
 LittleBrother
 =
 
@@ -52,8 +59,8 @@ python3 LittleBrother.py
 
 Discord
 =
-Si vous avez des questions, des idées, des problèmes concernant LittleBrother ou si vous voulez juste suivre l'avancement de ce projet.  
-- [Serveur Discord](https://discord.gg/r8GvsYM)
+~~Si vous avez des questions, des idées, des problèmes concernant LittleBrother ou si vous voulez juste suivre l'avancement de ce projet.~~
+Momentanément clos.
 
 Nouveautées version 6.0
 =
@@ -117,6 +124,10 @@ Fonctionnalites
 	- Database management
 	- Profile creator
 
-Contributors
+Contributeurs
 =
 ❤️ [H3L](https://github.com/lrhel) ❤
+
+Nous Soutenir
+=
+BTC: 1LvSfG69S1UBsQTrXobY7ZoJYAkvo2psKD
