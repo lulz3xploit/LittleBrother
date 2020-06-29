@@ -2,7 +2,7 @@
 * [Disclaimer](#Disclaimer)
 * [Installation sur Linux](#Installation-sur-Linux)
 * [Installation sur Windows](#Installation-sur-Windows)
-* [Contributeur](#Contributeur)
+* [Contributeurs](#Contributeurs)
 * [Nous Soutenir](#Nous-Soutenir)
 
 LittleBrother
