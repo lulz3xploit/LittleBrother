@@ -27,14 +27,14 @@ class searchInfoNumero:
 		page = requests.get(url+num).content.decode('utf-8')
 		p = []
 		soup = BeautifulSoup(page, "html.parser")
-		tags = soup("p")
+		tags = soup("span", {"class":"text-white text-sm opacity-8"})
 
 		for n in tags:
-			line = n.string
+			line = n.string.strip("'0\n\t\t\t\t\t\t\t\t\t\t\t\t")
 			p.append(line)
 
-		operator = p[2]
-		ville = p[3]
+		operator = p[3]
+		ville = p[4]
 
 		self.location = location.get(pfx)
 		self.city = ville
