@@ -25,7 +25,7 @@ from core.hashDecrypt import hashdecrypt
 
 
 #Help & settings
-from txt.help import helpLookup
+from txt.help import *
 import settings
 
 init()

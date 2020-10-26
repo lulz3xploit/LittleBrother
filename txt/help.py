@@ -1,6 +1,6 @@
 helpMain = """
  Name                       Action
- ----                       ------<
+ ----                       ------
  Lookup                     Faire des recherches sur une personne.
  Other Tool                 Utiliser des outils autre que pour de la reconnaissance.
  Make file                  Creer un fichier '.txt' pour y ecrire les infos obtenu.
