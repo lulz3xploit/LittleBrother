@@ -15,6 +15,10 @@ def searchInstagram():
 	insta = instagramSearchTool()
 	insta.getInfo(user)
 
+	if not insta.name:
+		print("\n" + warning + "Username '%s' not found." % user)
+		return
+
 	name = insta.name
 	userId = insta.id
 	images = insta.profi_pic_hd
