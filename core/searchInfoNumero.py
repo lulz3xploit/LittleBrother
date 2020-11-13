@@ -23,7 +23,7 @@ class searchInfoNumero:
 		num = num.replace(" ","").replace("+33", "0")
 		pfx = num[0:2]
 
-		url = 'https://www.infos-numero.com/numero/'
+		url = 'https://www.infos-numero.com/numero-telephone/'
 		page = requests.get(url+num).content.decode('utf-8')
 		p = []
 		soup = BeautifulSoup(page, "html.parser")
