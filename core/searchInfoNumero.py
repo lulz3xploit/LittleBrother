@@ -1,17 +1,9 @@
 import requests
-from bs4 import BeautifulSoup
+import json
 
 class searchInfoNumero:
 
 	def search(self, num):
-		def mob_fix(pfx):
-			if pfx == '06' or pfx == '07':
-				return("Portable")
-			elif pfx == '08' or pfx == '09':
-				return("internet")
-			else:
-				return("Fixe")
-
 		location = {
 			"01": "Ile de France.",
 			"02": "Nord-Ouest de la France.",
@@ -23,26 +15,11 @@ class searchInfoNumero:
 		num = num.replace(" ","").replace("+33", "0")
 		pfx = num[0:2]
 
-		url = 'https://www.infos-numero.com/numero-telephone/'
-		page = requests.get(url+num).content.decode('utf-8')
-		p = []
-		soup = BeautifulSoup(page, "html.parser")
-		tags = soup("span", {"class":"text-white text-sm opacity-8"})
+		url = 'https://www.infos-numero.com/ajax/NumberInfo?num='
+		page = requests.get(url+num).text
+		data = json.loads(page)['info']
 
-		for n in tags:
-			line = n.string.strip("'0\n\t\t\t\t\t\t\t\t\t\t\t\t")
-			p.append(line)
-
-		operator = p[3]
-		ville = p[4]
-
+		self.phone_type = data['type_lang']['en']
 		self.location = location.get(pfx)
-		self.city = ville
-		self.operator = operator
-
-		if mob_fix(pfx) == 'Portable':
-			self.phone_type = "Portable"
-		elif mob_fix(pfx) == 'internet':
-			self.phone_type = "Voip/FAI"
-		else:
-			self.phone_type = "Fixe"
+		self.city = data['ville']
+		self.operator = data['carrier']
