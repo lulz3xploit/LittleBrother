@@ -130,6 +130,7 @@ Fonctionnalites
 Contributeurs
 =
 ❤️ [H3L](https://github.com/lrhel) ❤
+Merci à [Kwizfreak](https://github.com/kwizfreak) pour avoir développé l'API sur le site [infos-numero.com](https://www.infos-numero.com)
 
 Nous Soutenir
 =
