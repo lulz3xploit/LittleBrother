@@ -37,7 +37,7 @@ def searchPJ(requete='', num=''):
 		for n in numList:
 			p = searchInfoNumero()
 			p.search(n)
-			operator_list.append(p.operator.replace("Mobile - ", ""))
+			operator_list.append(p.phone_type)
 
 		TABLE_DATA.append((nameList, addressList, ", ".join(numList), ", ".join(operator_list)))
 
