@@ -1,5 +1,4 @@
 Table des Matières
-
 =
 
 * [Nous Soutenir](#Nous-Soutenir)
@@ -19,7 +18,6 @@ Table des Matières
 
 
 Nous Soutenir
-
 =
 
 BTC: 1LvSfG69S1UBsQTrXobY7ZoJYAkvo2psKD
@@ -27,7 +25,6 @@ BTC: 1LvSfG69S1UBsQTrXobY7ZoJYAkvo2psKD
 
 
 Contributeurs
-
 =
 
  * ❤️ [H3L](https://github.com/lrhel) ❤
@@ -37,7 +34,6 @@ Contributeurs
 
 
 ReadOnly
-
 =
 
 Littlebrother est maintenant en **Read only**, il ne sera plus maintenu ni mis à jour et aucune contribution est possible.
@@ -49,7 +45,6 @@ Vous pouvez soutenir financierement le prochain projet : **BTC:** `1LvSfG69S1UBs
 
 
 LittleBrother
-
 =
 
 
@@ -63,7 +58,6 @@ LittleBrother est un outil de collectes d'informations (OSINT) qui vise à effec
 
 
 Disclaimer
-
 =
 
 LittleBrother a été développé pour faire des recherches sur soi-même et pour voir les informations privées et sensibles que l'on peut laisser derrière sur les réseaux sociaux. Je n'encourage en aucun cas l'utilisation de cet outil sur une autre personne que soi-même ou d'utiliser cet outil à mauvais escient. Les auteurs de LittleBrother ne peuvent etre tenu pour responsable de l'utilisation de son outil.
@@ -73,7 +67,6 @@ LittleBrother a été développé pour faire des recherches sur soi-même et pou
 
 
 Installation sur Linux
-
 =
 
 Il faut avoir `git` et `python3` d'installer sur sa machine
@@ -93,7 +86,6 @@ Il faut avoir `git` et `python3` d'installer sur sa machine
 
 
 Execution Linux
-
 =
 
 Dans le repertoire de LittleBrother, lancez cette commande pour pouvoir lancer LittleBrother:
@@ -107,7 +99,6 @@ python3 LittleBrother.py
 
 
 Installation sur Windows
-
 =
 
 - 1. Telecharger [LittleBrother](https://github.com/lulz3xploit/LittleBrother/archive/master.zip)
@@ -139,7 +130,6 @@ et executez:
 
 
 Lancer LittleBrother depuis Windows:
-
 =
 
 - Allez dans le repertoire **LittleBrother-master** comme a son installation et executez la commande: 
@@ -153,7 +143,6 @@ python3 LittleBrother.py
 
 
 Discord
-
 =
 
 ~~Si vous avez des questions, des idées, des problèmes concernant LittleBrother ou si vous voulez juste suivre l'avancement de ce projet.~~
@@ -172,7 +161,6 @@ Compatible
 
 
 Python version:
-
 =
 
 - Python3
@@ -180,7 +168,6 @@ Python version:
 
 
 Modules Python
-
 =
 
 - requests
@@ -194,7 +181,6 @@ Modules Python
 
 
 Fonctionnalites
-
 =
 
  - Lookup:
